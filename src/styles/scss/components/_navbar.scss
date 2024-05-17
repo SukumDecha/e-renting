@@ -1,0 +1,42 @@
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    max-width: 1240px;
+
+    .-logo {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        .-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+    }
+
+    .-sitemap {
+        display: flex;
+        gap: 1rem;
+        margin-right: auto;
+        text-decoration: none;
+        transition: all 0.5s;
+
+        a {
+            color: $primary-color !important;
+        }
+        a::hover {
+            color: $hover-color;
+            text-decoration: underline;
+        }
+    }
+
+    .-contact, .-auth {
+        display: flex;
+        gap: 1rem;
+        color: white;
+    }
+}

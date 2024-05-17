@@ -1,0 +1,75 @@
+.hero {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 300px;
+    width: 80%;
+    margin: 0 auto;
+
+
+    .-card {
+        max-width: 320px;
+        border-width: 1px;
+            border-color: rgba(219, 234, 254, 1);
+            border-radius: 1rem;
+            background-color: rgba(255, 255, 255, 1);
+            padding: 1rem;
+          
+          .header {
+            display: flex;
+            align-items: center;
+            grid-gap: 1rem;
+            gap: 1rem;
+          }
+          
+          .icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background-color: rgba(96, 165, 250, 1);
+            padding: 0.5rem;
+            color: rgba(255, 255, 255, 1);
+          }
+          
+          .icon svg {
+            height: 1rem;
+            width: 1rem;
+          }
+          
+          .alert {
+            font-weight: 600;
+            color: rgba(107, 114, 128, 1);
+          }
+          
+          .message {
+            margin-top: 1rem;
+            color: rgba(107, 114, 128, 1);
+          }
+          
+          .actions {
+            margin-top: 1.5rem;
+          }
+          
+          .actions a {
+            text-decoration: none;
+          }
+    }
+    .-banner {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        h4 {
+            width: 10%;
+            text-wrap: wrap;
+        }
+    
+        img {
+            border-radius: 20px;
+            width: auto;
+            height: 100%;
+        }
+    }
+}

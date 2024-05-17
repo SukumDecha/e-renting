@@ -1,0 +1,36 @@
+.ect-button {
+    display: inline-block;
+    border-radius: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    transition: all 0.5s;
+
+    &.-primary {
+        background-color: rgba(59, 130, 246, 1);
+        color: rgba(255, 255, 255, 1);
+
+        &:hover {
+            background-color: rgb(116, 171, 255);
+        }
+    }
+
+    &.-secondary {
+        margin-top: 0.5rem;
+        background-color: rgba(249, 250, 251, 1);
+        color: rgba(107, 114, 128, 1);
+        transition: all .15s ease;
+
+        &:hover {
+            background-color: rgb(230, 231, 233);
+        }
+    }
+
+    &:hover {
+        transform: translateY(10%);
+      
+    }
+}
