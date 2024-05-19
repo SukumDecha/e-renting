@@ -38,5 +38,16 @@
         display: flex;
         gap: 1rem;
         color: white;
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.5s;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 }

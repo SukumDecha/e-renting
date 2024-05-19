@@ -1,25 +1,33 @@
-import {
-  IconBrandInstagram,
-  IconBrandFacebook,
-  IconBrandChrome,
-} from "@tabler/icons-react";
+import { IconUserSquare, IconLogin } from "@tabler/icons-react";
+
 import { Divider } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const icons = [
+// const icons = [
+//   {
+//     key: "instragram",
+//     element: <IconBrandInstagram />,
+//   },
+//   {
+//     key: "facebook",
+//     element: <IconBrandFacebook />,
+//   },
+//   {
+//     key: "website",
+//     element: <IconBrandChrome />,
+//   },
+// ];
+
+const auths = [
   {
-    key: "instragram",
-    element: <IconBrandInstagram />,
+    label: "เข้าสู่ระบบ",
+    icon: <IconLogin />,
   },
   {
-    key: "facebook",
-    element: <IconBrandFacebook />,
-  },
-  {
-    key: "website",
-    element: <IconBrandChrome />,
+    label: "สมัครสมาชิก",
+    icon: <IconUserSquare />,
   },
 ];
 
@@ -40,7 +48,9 @@ const Navbar = () => {
         <div className="-img">
           <Image src="/assets/logo.jpeg" width={50} height={50} alt="logo" />
         </div>
-        <h4>ECT Renting</h4>
+        <div className="-title">
+          <h4>ECT Renting</h4>
+        </div>
       </div>
 
       <Divider
@@ -58,11 +68,11 @@ const Navbar = () => {
         })}
       </div>
 
-      <div className="-contact">
-        {icons.map((item) => {
+      <div className="-auth">
+        {auths.map((item) => {
           return (
-            <div className="icon" key={item.key}>
-              {item.element}
+            <div className="item" key={item.label}>
+              {item.icon} {item.label}
             </div>
           );
         })}

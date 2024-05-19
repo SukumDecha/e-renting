@@ -5,7 +5,7 @@ import "@/styles/tailwinds/globals.css";
 import "@/styles/scss/components/index.scss";
 import { ConfigProvider } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
-import Navbar from "@/components/shared/navbar";
+import Navbar from "@/features/components/shared/navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

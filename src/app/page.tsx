@@ -1,4 +1,4 @@
-import HeroBanner from "@/components/hero-banner";
+import HeroBanner from "@/features/components/hero-banner";
 import React from "react";
 
 const page = () => {
