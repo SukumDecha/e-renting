@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,18 +5,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-enum Role {
-  ADMIN
-  MEMBER
-}
-
-enum RequestStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  RETURNED
 }
 
 model User {
@@ -34,20 +16,20 @@ model User {
   role      Role      @default(MEMBER)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  requests  Request[]
   Cart      Cart[]
+  requests  Request[]
 }
 
 model Request {
   id              Int           @id @default(autoincrement())
   status          RequestStatus @default(PENDING)
   reason          String
-  requestDate     DateTime
   rejectionReason String?
   userId          Int
-  user            User          @relation(fields: [userId], references: [id])
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+  requestDate     DateTime
+  user            User          @relation(fields: [userId], references: [id])
 
   @@unique([userId, requestDate])
 }
@@ -69,10 +51,23 @@ model Cart {
   id        Int      @id @default(autoincrement())
   userId    Int
   productId Int
-  user      User     @relation(fields: [userId], references: [id])
-  product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, productId])
 }
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  RETURNED
+}
+

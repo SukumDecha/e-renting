@@ -23,13 +23,14 @@
         gap: 1rem;
         margin-right: auto;
         text-decoration: none;
-        transition: all 0.5s;
+        transition: all 0.5s ease;
 
         a {
-            color: $primary-color !important;
+            color: white;
         }
-        a::hover {
-            color: $hover-color;
+
+        a:hover {
+            color: $color-hover;
             text-decoration: underline;
         }
     }

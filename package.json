@@ -16,7 +16,8 @@
     "@tabler/icons": "^3.4.0",
     "@tabler/icons-react": "^3.4.0",
     "@tanstack/react-query": "^5.36.2",
-    "antd": "^5.17.1",
+    "antd": "^5.17.3",
+    "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.11",
     "lodash": "^4.17.21",
     "next": "14.2.3",
@@ -31,6 +32,8 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.37.1",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
