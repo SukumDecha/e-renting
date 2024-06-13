@@ -1,6 +1,5 @@
-import { findAll } from "@/features/products/api";
 import ProductList from "@/features/products/components/ProductList";
-import HeroBanner from "@/features/shared/components/hero-banner";
+import HeroBanner from "@/features/shared/components/home/hero-banner";
 import { IProduct } from "@/features/shared/types/IProduct";
 import React from "react";
 

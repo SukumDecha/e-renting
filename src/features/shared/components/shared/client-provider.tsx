@@ -13,7 +13,7 @@ interface ClientProvidersProps {
 const ClientProviders = ({ children }: ClientProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <SessionProvider> {children}</SessionProvider>
+      <SessionProvider>{children}</SessionProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

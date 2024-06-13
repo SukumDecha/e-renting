@@ -60,7 +60,7 @@ export const updateUser = async (userId: number, input: ProfileForm) => {
     data: {
       ...input,
       image,
-      password: input.password ? hashPassword(input.password) : undefined,
+      password: input.password ? await hashPassword(input.password) : undefined,
     },
   });
 };

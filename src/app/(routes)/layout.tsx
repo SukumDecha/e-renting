@@ -3,10 +3,11 @@ import { Inter } from "next/font/google";
 
 import "@/styles/tailwinds/globals.css";
 import "@/styles/scss/components/index.scss";
-import { ConfigProvider } from "antd";
-import { Header, Content } from "antd/es/layout/layout";
+import { ConfigProvider, Layout } from "antd";
 import theme from "@/styles/theme";
-import Navbar from "@/features/shared/components/shared/navbar";
+import ClientProviders from "@/features/shared/components/shared/client-provider";
+import Sidebar from "@/features/shared/components/shared/sidebar";
+import { Content } from "antd/es/layout/layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,10 +43,13 @@ export default function RootLayout({
             },
           }}
         >
-          <Header>
-            <Navbar />
-          </Header>
-          <Content className="container mx-auto">{children}</Content>
+          <ClientProviders>
+            <Layout>
+              <Sidebar />
+
+              <Content className="container mx-auto">{children}</Content>
+            </Layout>
+          </ClientProviders>
         </ConfigProvider>
       </body>
     </html>

@@ -4,7 +4,7 @@ interface IProps {
   children: ReactNode;
   className?: string;
   type?: "primary" | "secondary" | "danger";
-  buttonType?: "button" | "submit" | "reset";
+  htmlType?: "button" | "submit" | "reset";
   fullWidth?: boolean;
   onClick?: () => void;
   style?: any;
@@ -14,7 +14,7 @@ const ECTButton = ({
   children,
   className,
   type = "primary",
-  buttonType = "button",
+  htmlType = "button",
   fullWidth = true,
   onClick,
   style,
@@ -32,7 +32,7 @@ const ECTButton = ({
         width: fullWidth ? "100%" : "",
         ...style,
       }}
-      type={buttonType}
+      type={htmlType}
       onClick={onClick}
     >
       {children}

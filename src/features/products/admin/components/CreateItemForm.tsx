@@ -128,7 +128,7 @@ const CreateItemForm = () => {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <ECTButton type="secondary" buttonType="submit">
+          <ECTButton type="secondary" htmlType="submit">
             Add new product
           </ECTButton>
         </Form.Item>

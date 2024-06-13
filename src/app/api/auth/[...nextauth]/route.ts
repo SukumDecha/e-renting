@@ -1,6 +1,5 @@
-import { GET } from './../../articles/[id]/route';
-import { authOptions } from '@/features/auth/auth';
-import NextAuth from 'next-auth/next';
+import { authOptions } from "@/features/auth/auth";
+import NextAuth from "next-auth/next";
 
 const handler = NextAuth(authOptions);
 

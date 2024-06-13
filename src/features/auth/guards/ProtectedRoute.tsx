@@ -1,8 +1,8 @@
-import { useUiStore } from "@/features/shared/stores/uiStore";
-import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { ReactNode, useEffect, useState } from "react";
+import { Role } from "../types";
+import { useUiStore } from "@/features/shared/stores/UiStore";
 
 interface ProtectedRouteProps {
   roles?: Role[];
@@ -19,7 +19,7 @@ const ProtectedRoute = ({ roles, children }: ProtectedRouteProps) => {
     if (status === "loading") return;
     if (status === "unauthenticated") {
       setToast({ type: "Error", message: "Please login." });
-      router.replace("/auth/sign-in");
+      router.replace("/auth/login");
       return;
     }
     if (!roles) return setAllowed(true);

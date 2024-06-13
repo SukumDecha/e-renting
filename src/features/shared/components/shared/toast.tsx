@@ -1,7 +1,7 @@
 "use client";
 
 import { useShallow } from "zustand/react/shallow";
-import { useUiStore } from "../../stores/uiStore";
+import { useUiStore } from "../../stores/UiStore";
 
 const Toast = () => {
   const [toast, clearToast] = useUiStore(

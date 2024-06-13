@@ -40,7 +40,7 @@ export const useCartStore = create<CartState>()(
             state.cart = [];
           },
           false,
-          { type: "cart/clearCart", }
+          { type: "cart/clearCart" }
         );
       },
     }))
