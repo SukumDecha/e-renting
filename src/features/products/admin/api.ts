@@ -1,8 +1,8 @@
 import db from "@/features/shared/db";
 import z from "zod";
 import { revalidatePath } from "next/cache";
-import { saveFile } from "@/features/shared/helpers/file";
 import * as validators from "./validator";
+import { saveFile } from "@/features/shared/helpers/file";
 
 export const add = async (
   input: z.infer<typeof validators.addProductSchema>
@@ -11,16 +11,16 @@ export const add = async (
     throw Error("No image uploaded");
   }
 
-  // const image = await saveFile(input.image);
+  const image = await saveFile(input.image);
+  
   const product = await db.product.create({
     data: {
       ...input,
-      // image,
+      image,
     },
   });
 
   revalidatePath("/products");
-
   return product;
 };
 

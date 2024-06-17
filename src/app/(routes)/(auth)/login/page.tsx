@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const LoginPage = () => {
-  const setToast = useUiStore((state) => state.setToast);
+  const openNotification = useUiStore((state) => state.openNotification);
   const router = useRouter();
   const onSubmit = async (credentials: SignIn) => {
     const result = await signIn("credentials", {
@@ -16,17 +16,19 @@ const LoginPage = () => {
     });
 
     if (result?.ok) {
-      setToast({
-        type: "Success",
-        message: "Welcome back",
+      openNotification({
+        icon: "success",
+        message: "Login Successfully",
+        description: "Welcome back...",
       });
       router.replace("/");
     }
 
     if (result?.error) {
-      setToast({
-        type: "Error",
-        message: "Invalid Credentials",
+      openNotification({
+        icon: "error",
+        message: "Login Failed",
+        description: "Invalid credentials",
       });
     }
   };

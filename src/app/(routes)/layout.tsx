@@ -34,11 +34,9 @@ export default function RootLayout({
               Button: {
                 defaultBg: theme.color.primary,
                 colorPrimary: theme.color.hover,
-                algorithm: true, // Enable algorithm
               },
               Input: {
                 colorPrimary: theme.color.primary,
-                algorithm: true, // Enable algorithm
               },
             },
           }}
@@ -47,7 +45,9 @@ export default function RootLayout({
             <Layout>
               <Sidebar />
 
-              <Content className="container mx-auto">{children}</Content>
+              <Content className="container mx-auto relative">
+                {children}
+              </Content>
             </Layout>
           </ClientProviders>
         </ConfigProvider>

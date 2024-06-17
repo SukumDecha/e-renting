@@ -35,16 +35,15 @@ model Request {
 }
 
 model Product {
-  id            Int      @id @default(autoincrement())
-  name          String
-  slug          String   @unique
-  image         String
-  description   String
-  totalAmount   Int
-  currentAmount Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  Cart          Cart[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  image       String
+  description String
+  quantity    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Cart        Cart[]
 }
 
 model Cart {
@@ -70,4 +69,3 @@ enum RequestStatus {
   REJECTED
   RETURNED
 }
-

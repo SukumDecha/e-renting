@@ -1,14 +1,22 @@
 "use client";
 import ECTButton from "@/features/shared/components/shared/button";
 import { IconPlus } from "@tabler/icons-react";
-import { Form, Input, InputNumber, Upload, message } from "antd";
+import { Form, Input, InputNumber, Upload } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 
 const { TextArea } = Input;
 import React from "react";
 
+import { useUiStore } from "@/features/shared/stores/UiStore";
+import { useCreateProduct } from "../../hooks/api";
+import { IAddProduct } from "../type";
+import { useRouter } from "next/navigation";
+
 const CreateItemForm = () => {
+  const router = useRouter();
+  const setToast = useUiStore((state) => state.setToast);
+  const { mutateAsync } = useCreateProduct();
   const [form] = Form.useForm();
 
   const normFile = (e: any) => {
@@ -18,15 +26,14 @@ const CreateItemForm = () => {
     return e?.fileList;
   };
 
-  const handleSubmit = (values: any) => {
-    console.log("Form values:", values);
-    // You can perform additional actions with the form values here, such as sending them to a server
-    message.success("Product added successfully!");
-  };
+  const handleSubmit = async (data: IAddProduct) => {
+    await mutateAsync(data);
 
-  const handleFailedSubmit = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-    message.error("Please check the form for errors.");
+    setToast({
+      type: "Success",
+      message: `Product ${data.name} has been added to renting stock.`,
+    });
+    router.replace("/");
   };
 
   return (
@@ -68,7 +75,7 @@ const CreateItemForm = () => {
         wrapperCol={{ span: 24 }}
         layout="horizontal"
         onFinish={handleSubmit}
-        onFinishFailed={handleFailedSubmit}
+        encType="multipart/form-data"
       >
         <Form.Item
           label="Enter Product name"
@@ -88,13 +95,16 @@ const CreateItemForm = () => {
         </Form.Item>
         <Form.Item
           label="Enter Product quantity"
-          name="amount"
+          name="quantity"
           rules={[
             {
               required: true,
+              message: "Please enter the quantity",
+            },
+            {
               type: "number",
               min: 1,
-              message: "Please enter a valid quantity",
+              message: "Quantity must be atleast 1",
             },
           ]}
         >
@@ -103,23 +113,21 @@ const CreateItemForm = () => {
 
         <Form.Item
           label="Upload product's picture"
-          name="picture"
+          name="image"
           valuePropName="fileList"
           getValueFromEvent={normFile}
           rules={[
             {
               required: true,
               message: "Please upload a product picture",
-              max: 1,
-              min: 1,
             },
           ]}
         >
           <Upload
-            action="/upload.do"
             listType="picture-card"
             maxCount={1}
             type="drag"
+            accept="image/*"
           >
             <button style={{ border: 0, background: "none" }} type="button">
               <IconPlus />

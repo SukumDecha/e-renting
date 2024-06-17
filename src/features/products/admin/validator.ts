@@ -1,18 +1,14 @@
+import { image } from "@/features/shared/validators/image";
 import { z } from "zod";
 
 const productBaseSchema = z.object({
   name: z.string(),
-  id: z.number(),
   slug: z.string(),
-  image: z.string(),
+  image: z.any(),
   description: z.string(),
-  totalAmount: z.number(),
-  currentAmount: z.number(),
-  updatedAt: z.date(),
+  quantity: z.number(),
 });
 
-// Schema for adding a product (requires all fields)
 export const addProductSchema = productBaseSchema;
 
-// Schema for updating a product (partial updates allowed)
 export const updateProductSchema = productBaseSchema.partial();
