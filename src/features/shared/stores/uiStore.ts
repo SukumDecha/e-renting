@@ -2,10 +2,9 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools } from "zustand/middleware";
 import { notification } from "antd";
-import { IconType } from "antd/es/notification/interface";
 
 export interface INotification {
-  icon: IconType;
+  type: "success" | "info" | "warning" | "error";
   message: string;
   description: string;
 }
@@ -19,39 +18,47 @@ export const useUiStore = create<UiState>()(
   immer(
     devtools((set) => ({
       notification: null,
-      openNotification({ icon, message, description }: INotification) {
-        if (icon === "success") {
-          notification.success({
-            icon,
-            message,
-            description,
-            closable: true,
-            duration: 3,
-          });
-        } else if (icon === "error") {
-          notification.error({
-            icon,
-            message,
-            description,
-            closable: true,
-            duration: 3,
-          });
-        } else if (icon === "warning") {
-          notification.warning({
-            icon,
-            message,
-            description,
-            closable: true,
-            duration: 3,
-          });
-        } else {
-          notification.info({
-            icon,
-            message,
-            description,
-            closable: true,
-            duration: 3,
-          });
+      openNotification({ type, message, description }: INotification) {
+        switch (type) {
+          case "success":
+            notification.success({
+              message,
+              description,
+              closable: true,
+              duration: 3,
+            });
+            break;
+          case "info":
+            notification.info({
+              message,
+              description,
+              closable: true,
+              duration: 3,
+            });
+            break;
+          case "warning":
+            notification.warning({
+              message,
+              description,
+              closable: true,
+              duration: 3,
+            });
+            break;
+          case "error":
+            notification.error({
+              message,
+              description,
+              closable: true,
+              duration: 3,
+            });
+            break;
+          default:
+            notification.open({
+              message,
+              description,
+              closable: true,
+              duration: 3,
+            });
         }
       },
     }))

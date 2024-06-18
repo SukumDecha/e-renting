@@ -1,4 +1,3 @@
-import { image } from "@/features/shared/validators/image";
 import { z } from "zod";
 
 const productBaseSchema = z.object({

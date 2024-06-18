@@ -1,4 +1,4 @@
-.-product-list {
+.product-list {
     h4 {
         margin-top: 1rem;
         text-align: center;
@@ -6,7 +6,7 @@
         font-size: 2.2rem;
     }
 
-    .product-item {
+    .-product-item {
         width: 200px;
         margin: 0 auto;
         border-radius: 30px;
@@ -20,5 +20,60 @@
             transform: translateY(-5px)
         }
     }
+}
+
+.product-item-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .-card {
+        width: 240px;
+
+        @media (min-width: $breakpoint-md) {
+            width: 500px;
+        }
+
+        .-image {
+            width: 250px;
+
+        
+            @media (min-width: $breakpoint-md) {
+                width: 500px;
+            }
+        }
+
+        .-card-title {
+            display: flex;
+            gap: .5rem;
+        }
+
+        .-card-details {
+            .title {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+            }
+
+            .details {
+                padding: 2px;
+
+            }
+
+            h4 {
+                font-size: 20px;
+                font-weight: 500;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 16px;
+                opacity: 0.8;
+                margin-bottom: 12px;
+            }
+        }
+    }
+   
+
 
 }

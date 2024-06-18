@@ -1,9 +1,17 @@
-import React from 'react'
+import { IProduct } from "@/features/products/admin/type";
+import { findAll } from "@/features/products/api";
+import ProductList from "@/features/products/components/ProductList";
+import NotFound from "@/features/shared/components/not-found";
+import React from "react";
 
-const ProductPage = () => {
-  return (
-    <div>ProductList</div>
-  )
-}
+const ProductPage = async () => {
+  const products: IProduct[] = await findAll();
 
-export default ProductPage
+  if (products.length === 0) {
+    return <NotFound reason="ไม่มีอุปกรณ์ที่สามารถยืมได้ในขณะนี้" />;
+  }
+
+  return <ProductList products={products} />;
+};
+
+export default ProductPage;

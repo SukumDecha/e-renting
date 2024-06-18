@@ -1,6 +1,7 @@
-import { IProduct } from "@/features/shared/types/IProduct";
-import { Col, Divider, Row } from "antd";
+import { Col, Divider, Empty, Row } from "antd";
 import ProductItem from "./ProductItem";
+import { IProduct } from "../admin/type";
+import NotFound from "@/features/shared/components/not-found";
 
 interface IProps {
   products: IProduct[];
@@ -8,7 +9,7 @@ interface IProps {
 
 const ProductList = ({ products }: IProps) => {
   return (
-    <section id="product-list" className="-product-list">
+    <section id="product-list" className="product-list">
       <h4>อุปกรณ์ที่สามารถยืมได้</h4>
 
       <Divider className="my-4" />

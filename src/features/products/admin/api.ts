@@ -1,8 +1,11 @@
+import { image } from "@/features/shared/validators/image";
 import db from "@/features/shared/db";
 import z from "zod";
 import { revalidatePath } from "next/cache";
 import * as validators from "./validator";
-import { saveFile } from "@/features/shared/helpers/file";
+import { removeDirFromFile, saveFile } from "@/features/shared/helpers/file";
+import { findBySlug } from "../api";
+import { slugify } from "@/features/shared/helpers/slugify";
 
 export const add = async (
   input: z.infer<typeof validators.addProductSchema>
@@ -12,7 +15,7 @@ export const add = async (
   }
 
   const image = await saveFile(input.image);
-  
+
   const product = await db.product.create({
     data: {
       ...input,
@@ -25,34 +28,51 @@ export const add = async (
 };
 
 export const update = async (
-  id: number,
+  slug: string,
   input: z.infer<typeof validators.updateProductSchema>
 ) => {
-  const article = db.product.update({
+  let product: any = await findBySlug(slug);
+
+  if (product === null) {
+    throw new Error(`Product with slug ${slug} not found`);
+  }
+
+  let { image } = product;
+
+  if (input.image) {
+    const currentImage = image;
+    image = await saveFile(input.image);
+    if (currentImage) removeDirFromFile(currentImage);
+  }
+
+  product = db.product.update({
     where: {
-      id,
+      slug,
     },
     data: {
       ...input,
-      image: "",
+      image,
+      slug: input.name ? slugify(input.name) : undefined,
     },
   });
 
+  revalidatePath(`/`);
   revalidatePath("/products");
-  revalidatePath(`/products/${id}`);
+  revalidatePath(`/products/${slug}`);
 
-  return article;
+  return product;
 };
 
-export const remove = async (id: number) => {
+export const remove = async (slug: string) => {
   const article = await db.product.delete({
     where: {
-      id,
+      slug,
     },
   });
 
+  revalidatePath(`/`);
   revalidatePath("/products");
-  revalidatePath(`/products/${id}`);
+  revalidatePath(`/products/${slug}`);
 
   return article;
 };

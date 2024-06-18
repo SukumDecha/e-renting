@@ -3,7 +3,7 @@ import React from "react";
 import { IconLock, IconMail, IconUserBolt } from "@tabler/icons-react";
 
 import { Checkbox, Form, Grid, Input, theme, Typography } from "antd";
-import ECTButton from "@/features/shared/components/shared/button";
+import ECTButton from "@/features/shared/components/button";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;

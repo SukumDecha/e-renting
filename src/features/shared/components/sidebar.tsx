@@ -10,7 +10,7 @@ import {
   IconUserCheck,
 } from "@tabler/icons-react";
 import { useShallow } from "zustand/react/shallow";
-import { useSiderStore } from "../../stores/SiderStore";
+import { useSiderStore } from "../stores/SiderStore";
 import Image from "next/image";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";

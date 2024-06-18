@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { IconSpeakerphone } from "@tabler/icons-react";
 import Link from "next/link";
-import ECTButton from "../shared/button";
+import ECTButton from "../button";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 const HeroBanner = () => {

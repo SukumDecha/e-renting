@@ -2,8 +2,7 @@ import CreateItemForm from "@/features/products/admin/components/CreateItemForm"
 
 import React from "react";
 
-const AdminPage = () => {
-
+const CreateProductPage = () => {
   return (
     <div className="flex justify-center items-center p-16">
       <CreateItemForm />
@@ -11,4 +10,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default CreateProductPage;

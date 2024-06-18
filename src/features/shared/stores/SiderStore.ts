@@ -11,7 +11,7 @@ export const useSiderStore = create<SiderState>()(
   immer(
     devtools((set) => {
       return {
-        collapsed: false,
+        collapsed: true,
         setCollapsed(collapsed) {
           set((state) => {
             state.collapsed = collapsed;

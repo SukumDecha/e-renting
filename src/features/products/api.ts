@@ -1,4 +1,5 @@
 import prisma from "../shared/db";
+import { IProduct } from "./admin/type";
 
 interface FindAllParams {
   limit?: number | undefined;
@@ -11,8 +12,7 @@ export const findAll = async ({ limit }: FindAllParams = {}) => {
       slug: true,
       image: true,
       description: true,
-      totalAmount: true,
-      currentAmount: true,
+      quantity: true,
       updatedAt: true,
     },
     orderBy: {
@@ -24,10 +24,19 @@ export const findAll = async ({ limit }: FindAllParams = {}) => {
   return products;
 };
 
-export const findById = async (id: number) => {
+export const findBySlug = async (slug: string) => {
   const product = await prisma.product.findUnique({
     where: {
-      id,
+      slug,
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      image: true,
+      description: true,
+      quantity: true,
+      updatedAt: true,
     },
   });
 

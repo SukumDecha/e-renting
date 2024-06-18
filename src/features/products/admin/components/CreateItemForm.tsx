@@ -1,5 +1,5 @@
 "use client";
-import ECTButton from "@/features/shared/components/shared/button";
+import ECTButton from "@/features/shared/components/button";
 import { IconPlus } from "@tabler/icons-react";
 import { Form, Input, InputNumber, Upload } from "antd";
 import Image from "next/image";
@@ -15,24 +15,28 @@ import { useRouter } from "next/navigation";
 
 const CreateItemForm = () => {
   const router = useRouter();
-  const setToast = useUiStore((state) => state.setToast);
+  const openNotification = useUiStore((state) => state.openNotification);
   const { mutateAsync } = useCreateProduct();
   const [form] = Form.useForm();
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
   const handleSubmit = async (data: IAddProduct) => {
-    await mutateAsync(data);
+    try {
+      console.log(data);
+      await mutateAsync(data);
 
-    setToast({
-      type: "Success",
-      message: `Product ${data.name} has been added to renting stock.`,
-    });
+      openNotification({
+        type: "success",
+        message: "Successfully added",
+        description: `${data.name} has been added to renting stock`,
+      });
+    } catch (e) {
+      openNotification({
+        type: "error",
+        message: "Failed to add",
+        description: `There was an error occurs while adding product.`,
+      });
+    }
+
     router.replace("/");
   };
 
@@ -114,8 +118,6 @@ const CreateItemForm = () => {
         <Form.Item
           label="Upload product's picture"
           name="image"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
           rules={[
             {
               required: true,

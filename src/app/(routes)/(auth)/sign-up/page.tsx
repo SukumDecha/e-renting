@@ -7,14 +7,14 @@ import { useRouter } from "next/navigation";
 const SignUpPage = () => {
   const { mutateAsync } = useRegister();
   const router = useRouter();
-  const setToast = useUiStore((state) => state.setToast);
+  const openNotification = useUiStore((state) => state.openNotification);
   const onSubmit = async (credentials: any) => {
-    console.log(credentials);
     await mutateAsync(credentials);
 
-    setToast({
-      type: "Success",
-      message: "Your account has been registered.",
+    openNotification({
+      type: "success",
+      message: "Register successfully",
+      description: "Your account has been registered",
     });
     router.replace("/");
   };

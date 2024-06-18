@@ -17,16 +17,16 @@ const LoginPage = () => {
 
     if (result?.ok) {
       openNotification({
-        icon: "success",
+        type: "success",
         message: "Login Successfully",
-        description: "Welcome back...",
+        description: "Welcome back",
       });
       router.replace("/");
     }
 
     if (result?.error) {
       openNotification({
-        icon: "error",
+        type: "error",
         message: "Login Failed",
         description: "Invalid credentials",
       });

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, CSSProperties } from "react";
 
 interface IProps {
   children: ReactNode;
@@ -7,33 +7,34 @@ interface IProps {
   htmlType?: "button" | "submit" | "reset";
   fullWidth?: boolean;
   onClick?: () => void;
-  style?: any;
+  style?: CSSProperties;
+  disabled?: boolean;
 }
 
-const ECTButton = ({
+const ECTButton: React.FC<IProps> = ({
   children,
-  className,
+  className = "",
   type = "primary",
   htmlType = "button",
   fullWidth = true,
   onClick,
   style,
-}: IProps) => {
+  disabled,
+}) => {
+  const buttonClass = `ect-button -${type} ${className}`.trim();
+
+  const buttonStyle: CSSProperties = {
+    width: fullWidth ? "100%" : undefined,
+    ...style,
+  };
+
   return (
     <button
-      className={`ect-button ${
-        type === "primary"
-          ? "-primary"
-          : type === "secondary"
-          ? "-secondary"
-          : "-danger"
-      } ${className}`}
-      style={{
-        width: fullWidth ? "100%" : "",
-        ...style,
-      }}
+      className={buttonClass}
+      style={buttonStyle}
       type={htmlType}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
