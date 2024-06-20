@@ -28,13 +28,6 @@ export default function RootLayout({
           theme={{
             hashed: false,
             components: {
-              Layout: {
-                headerBg: theme.background.primary,
-              },
-              Button: {
-                defaultBg: theme.color.primary,
-                colorPrimary: theme.color.hover,
-              },
               Input: {
                 colorPrimary: theme.color.primary,
               },

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { ReactNode, useEffect, useState } from "react";
 import { Role } from "../types";
 import { useUiStore } from "@/features/shared/stores/UiStore";
+import Loading from "@/features/shared/components/loading";
 
 interface ProtectedRouteProps {
   roles?: Role[];
@@ -10,7 +11,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ roles, children }: ProtectedRouteProps) => {
-  const setToast = useUiStore((state) => state.setToast);
+  const openNotification = useUiStore((state) => state.openNotification);
   const router = useRouter();
   const { data: session, status } = useSession();
   const [isAllowed, setAllowed] = useState(false);
@@ -18,7 +19,11 @@ const ProtectedRoute = ({ roles, children }: ProtectedRouteProps) => {
   useEffect(() => {
     if (status === "loading") return;
     if (status === "unauthenticated") {
-      setToast({ type: "Error", message: "Please login." });
+      openNotification({
+        type: "error",
+        message: "Unauthenticated",
+        description: "Please login before access this page",
+      });
       router.replace("/auth/login");
       return;
     }
@@ -26,14 +31,16 @@ const ProtectedRoute = ({ roles, children }: ProtectedRouteProps) => {
     if (status === "authenticated" && roles.includes(session?.user.role))
       return setAllowed(true);
 
-    setToast({
-      type: "Error",
-      message: "You are not allowed to access this page",
+    openNotification({
+      type: "error",
+      message: "No permission",
+      description: "You're not allowed to access this page",
     });
-    router.replace("/forbidden");
-  }, [roles, router, session?.user.role, setToast, status]);
 
-  if (status === "loading") return <div>Loading....</div>;
+    router.replace("/forbidden");
+  }, [roles, router, session?.user.role, status]);
+
+  if (status === "loading") return <Loading />;
   if (isAllowed) return <>{children}</>;
 
   return null;

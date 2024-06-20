@@ -35,13 +35,14 @@ export const DELETE = async (
   { params: { slug } }: PathParams
 ) => {
   const product = await remove(slug);
+
   if (product === null) {
-    return Response.json(`Product not found`, {
+    return new Response(`Product not found`, {
       status: 404,
     });
   }
 
-  return Response.json("Product has been removed", {
+  return new Response(null, {
     status: 204,
   });
 };

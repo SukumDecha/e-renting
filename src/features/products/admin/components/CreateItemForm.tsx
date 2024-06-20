@@ -3,25 +3,29 @@ import ECTButton from "@/features/shared/components/button";
 import { IconPlus } from "@tabler/icons-react";
 import { Form, Input, InputNumber, Upload } from "antd";
 import Image from "next/image";
-import Link from "next/link";
-
-const { TextArea } = Input;
-import React from "react";
-
+import React, { useState } from "react";
+import { UploadChangeParam } from "antd/es/upload";
+import { RcFile, UploadFile } from "antd/es/upload/interface";
 import { useUiStore } from "@/features/shared/stores/UiStore";
 import { useCreateProduct } from "../../hooks/api";
 import { IAddProduct } from "../type";
 import { useRouter } from "next/navigation";
+
+const { TextArea } = Input;
 
 const CreateItemForm = () => {
   const router = useRouter();
   const openNotification = useUiStore((state) => state.openNotification);
   const { mutateAsync } = useCreateProduct();
   const [form] = Form.useForm();
+  const [image, setImage] = useState<string | undefined>(undefined);
+
+  const handleBack = () => {
+    router.back();
+  };
 
   const handleSubmit = async (data: IAddProduct) => {
     try {
-      console.log(data);
       await mutateAsync(data);
 
       openNotification({
@@ -29,6 +33,7 @@ const CreateItemForm = () => {
         message: "Successfully added",
         description: `${data.name} has been added to renting stock`,
       });
+      router.push("/dashboard/products");
     } catch (e) {
       openNotification({
         type: "error",
@@ -36,10 +41,20 @@ const CreateItemForm = () => {
         description: `There was an error occurs while adding product.`,
       });
     }
-
-    router.replace("/");
   };
 
+  const handleImageChange = (info: UploadChangeParam<UploadFile>) => {
+    if (info.file.status === "done") {
+      const file = info.file.originFileObj as RcFile;
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        setImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else if (info.file.status === "removed") {
+      setImage(undefined);
+    }
+  };
   return (
     <div
       className="form"
@@ -48,17 +63,16 @@ const CreateItemForm = () => {
       }}
     >
       <div className="-description">
-        <Link href="/">
-          <ECTButton
-            type="danger"
-            style={{
-              marginBottom: "1rem",
-            }}
-            fullWidth={false}
-          >
-            Go back
-          </ECTButton>
-        </Link>
+        <ECTButton
+          type="danger"
+          style={{
+            marginBottom: "1rem",
+          }}
+          fullWidth={true}
+          onClick={handleBack}
+        >
+          Go back
+        </ECTButton>
         <h1>Let&apos;s add new product into the system</h1>
         <p>
           Fill the form to add new product to let other can borrow this item
@@ -66,7 +80,7 @@ const CreateItemForm = () => {
 
         <div className="-image">
           <Image
-            src="/assets/adding-item.jpg"
+            src={image || "/assets/no-image.png"}
             alt="adding-item"
             width={250}
             height={250}
@@ -108,7 +122,7 @@ const CreateItemForm = () => {
             {
               type: "number",
               min: 1,
-              message: "Quantity must be atleast 1",
+              message: "Quantity must be at least 1",
             },
           ]}
         >
@@ -128,8 +142,8 @@ const CreateItemForm = () => {
           <Upload
             listType="picture-card"
             maxCount={1}
-            type="drag"
             accept="image/*"
+            onChange={handleImageChange}
           >
             <button style={{ border: 0, background: "none" }} type="button">
               <IconPlus />

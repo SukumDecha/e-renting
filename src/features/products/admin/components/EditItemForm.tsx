@@ -12,15 +12,21 @@ import { useUiStore } from "@/features/shared/stores/UiStore";
 import { useEditProduct } from "../../hooks/api";
 import { IProduct, IUpdateProduct } from "../type";
 import { getImagePath } from "@/features/shared/helpers/upload";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   product: IProduct;
 }
 const EditItemForm = ({ product }: IProps) => {
+  const router = useRouter();
   const openNotification = useUiStore((state) => state.openNotification);
   const { mutateAsync } = useEditProduct(product.slug);
   const [form] = Form.useForm();
 
+  const handleBack = () => {
+    router.back();
+  };
+  
   const handleSubmit = async (data: IUpdateProduct) => {
     try {
       await mutateAsync(data);
@@ -30,6 +36,8 @@ const EditItemForm = ({ product }: IProps) => {
         message: "Successfully updated",
         description: `${data.name} has been updated`,
       });
+
+      router.push("/dashboard/products");
     } catch (e) {
       openNotification({
         type: "error",
@@ -47,17 +55,16 @@ const EditItemForm = ({ product }: IProps) => {
       }}
     >
       <div className="-description">
-        <Link href="/">
-          <ECTButton
-            type="danger"
-            style={{
-              marginBottom: "1rem",
-            }}
-            fullWidth={false}
-          >
-            Go back
-          </ECTButton>
-        </Link>
+        <ECTButton
+          type="danger"
+          style={{
+            marginBottom: "1rem",
+          }}
+          fullWidth={true}
+          onClick={handleBack}
+        >
+          Go back
+        </ECTButton>
         <h1>Edit Product info</h1>
         <p>Fill the form to edit this product...</p>
 

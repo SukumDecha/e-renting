@@ -2,12 +2,13 @@
 
 import React from "react";
 import { IProduct } from "../admin/type";
-import { Card, Tag, Tooltip } from "antd";
+import { Card, Tooltip } from "antd";
 import { getImagePath } from "@/features/shared/helpers/upload";
 import Image from "next/image";
 import ECTButton from "@/features/shared/components/button";
 import { IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
+import { renderTag } from "../helper";
 
 interface IProps {
   product: IProduct;
@@ -20,18 +21,6 @@ const renderTitle = () => {
       Go back
     </Link>
   );
-};
-
-const renderTag = (quantity: number) => {
-  if (quantity > 5) {
-    return <Tag color="green">Available</Tag>;
-  }
-
-  if (quantity <= 5) {
-    return <Tag color="orange">Running out</Tag>;
-  }
-
-  return <Tag color="red">Out of stock</Tag>;
 };
 
 const ProductItemDetail = ({ product }: IProps) => {

@@ -36,6 +36,7 @@ export const POST = async (req: Request) => {
       image,
     });
 
+    revalidatePath("/");
     revalidatePath("/products");
 
     return new Response(JSON.stringify(product), { status: 201 });
