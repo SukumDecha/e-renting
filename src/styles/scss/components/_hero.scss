@@ -56,12 +56,16 @@
           
           .actions {
             margin-top: 1.5rem;
+            display:  flex;
+            flex-direction: column;
+            gap: .5rem;
           }
           
           .actions a {
             text-decoration: none;
           }
     }
+
     .banner {
         display: flex;
         align-items: center;

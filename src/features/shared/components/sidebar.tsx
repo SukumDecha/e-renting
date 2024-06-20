@@ -15,6 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useUiStore } from "../stores/UiStore";
 
 const { Sider } = Layout;
 
@@ -32,53 +33,63 @@ const getItem = (
   label,
 });
 
-const unAuthorizedItems: MenuItem[] = [
-  getItem(
-    <Link href="/products">View all items</Link>,
-    "/products",
-    <IconTools />
-  ),
-  getItem(<Link href="/login">Login</Link>, "/login", <IconLockAccess />),
-  getItem(<Link href="/sign-up">Sign-up</Link>, "/sign-up", <IconUserCheck />),
-];
-
-const authorizedItems: MenuItem[] = [
-  getItem(
-    <Link href="/products">View all items</Link>,
-    "/products",
-    <IconTools />
-  ),
-  getItem(
-    <Link href="/request/history">View loan history</Link>,
-    "/request/history",
-    <IconHistory />
-  ),
-  getItem(
-    <Link href="/request/new-request">Create new a loan</Link>,
-    "/request/new-request",
-    <IconPencil />
-  ),
-  getItem(
-    <button
-      onClick={() =>
-        signOut({
-          redirect: false,
-        })
-      }
-    >
-      Logout
-    </button>,
-    "/logout",
-    <IconUserCheck />
-  ),
-];
-
 const Sidebar = () => {
   const pathname = usePathname();
   const { status } = useSession();
   const [collapsed, setCollapsed] = useSiderStore(
     useShallow((state) => [state.collapsed, state.setCollapsed])
   );
+
+  const openNotification = useUiStore((state) => state.openNotification);
+
+  const handleLogout = async () => {
+    await signOut({
+      redirect: false,
+    });
+
+    openNotification({
+      type: "success",
+      message: "Logout Successfully",
+      description: "You're logged out",
+    });
+  };
+
+  const unAuthorizedItems: MenuItem[] = [
+    getItem(
+      <Link href="/products">View all items</Link>,
+      "/products",
+      <IconTools />
+    ),
+    getItem(<Link href="/login">Login</Link>, "/login", <IconLockAccess />),
+    getItem(
+      <Link href="/sign-up">Sign-up</Link>,
+      "/sign-up",
+      <IconUserCheck />
+    ),
+  ];
+
+  const authorizedItems: MenuItem[] = [
+    getItem(
+      <Link href="/products">View all items</Link>,
+      "/products",
+      <IconTools />
+    ),
+    getItem(
+      <Link href="/request/history">View loan history</Link>,
+      "/request/history",
+      <IconHistory />
+    ),
+    getItem(
+      <Link href="/request/new-request">Create new a loan</Link>,
+      "/request/new-request",
+      <IconPencil />
+    ),
+    getItem(
+      <button onClick={handleLogout}>Logout</button>,
+      "/logout",
+      <IconUserCheck />
+    ),
+  ];
 
   const menuItems =
     status === "loading"

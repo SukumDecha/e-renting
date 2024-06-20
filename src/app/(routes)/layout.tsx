@@ -8,6 +8,9 @@ import theme from "@/styles/theme";
 import ClientProviders from "@/features/shared/components/client-provider";
 import Sidebar from "@/features/shared/components/sidebar";
 import { Content } from "antd/es/layout/layout";
+import { Suspense } from "react";
+import Loading from "@/features/shared/components/loading";
+import NotificationHandler from "@/features/shared/components/notification";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,9 +41,18 @@ export default function RootLayout({
             <Layout>
               <Sidebar />
 
-              <Content className="container mx-auto relative p-4 ">
-                {children}
-              </Content>
+              <Suspense
+                fallback={
+                  <>
+                    <Loading />
+                  </>
+                }
+              >
+                <Content className="container mx-auto relative p-4 ">
+                  {children}
+                </Content>
+                <NotificationHandler />
+              </Suspense>
             </Layout>
           </ClientProviders>
         </ConfigProvider>

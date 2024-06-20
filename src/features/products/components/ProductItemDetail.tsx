@@ -6,24 +6,26 @@ import { Card, Tooltip } from "antd";
 import { getImagePath } from "@/features/shared/helpers/upload";
 import Image from "next/image";
 import ECTButton from "@/features/shared/components/button";
-import { IconArrowLeft } from "@tabler/icons-react";
-import Link from "next/link";
 import { renderTag } from "../helper";
+import { useRouter } from "next/navigation";
+import { IconArrowLeft } from "@tabler/icons-react";
 
 interface IProps {
   product: IProduct;
 }
 
-const renderTitle = () => {
-  return (
-    <Link href="/" className="-card-title">
-      <IconArrowLeft />
-      Go back
-    </Link>
-  );
-};
-
 const ProductItemDetail = ({ product }: IProps) => {
+  const router = useRouter();
+
+  const renderTitle = () => {
+    return (
+      <div className="-card-title" onClick={() => router.back()}>
+        <IconArrowLeft />
+        Go back
+      </div>
+    );
+  };
+
   return (
     <div className="product-item-detail">
       <Card
@@ -55,7 +57,7 @@ const ProductItemDetail = ({ product }: IProps) => {
           <p className="details">{product.description}</p>
 
           <p>Currently {product.quantity} items left.</p>
-          <ECTButton type="primary">Click to Borrow</ECTButton>
+          <ECTButton type="secondary">Click to Borrow</ECTButton>
         </div>
       </Card>
     </div>

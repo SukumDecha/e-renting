@@ -6,9 +6,23 @@ import Link from "next/link";
 import ECTButton from "../button";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import { useUiStore } from "../../stores/UiStore";
 const HeroBanner = () => {
   const { status } = useSession();
+  const openNotification = useUiStore((state) => state.openNotification);
 
+  const handleLogout = () => {
+    signOut({
+      redirect: false,
+    });
+
+    openNotification({
+      type: "success",
+      message: "Logout Successfully",
+      description: "You're logged out",
+    });
+  };
+  
   const renderButton = () => {
     if (status === "unauthenticated") {
       return (
@@ -19,14 +33,7 @@ const HeroBanner = () => {
     }
 
     return (
-      <ECTButton
-        type="danger"
-        onClick={() =>
-          signOut({
-            redirect: false,
-          })
-        }
-      >
+      <ECTButton type="danger" onClick={handleLogout}>
         ออกจากระบบ
       </ECTButton>
     );

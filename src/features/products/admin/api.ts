@@ -1,4 +1,3 @@
-import { image } from "@/features/shared/validators/image";
 import db from "@/features/shared/db";
 import z from "zod";
 import { revalidatePath } from "next/cache";

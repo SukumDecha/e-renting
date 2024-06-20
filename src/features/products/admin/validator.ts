@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const productBaseSchema = z.object({
+export const addProductSchema = z.object({
   name: z.string(),
   slug: z.string(),
   image: z.any(),
@@ -8,6 +8,4 @@ const productBaseSchema = z.object({
   quantity: z.number(),
 });
 
-export const addProductSchema = productBaseSchema;
-
-export const updateProductSchema = productBaseSchema.partial();
+export const updateProductSchema = addProductSchema.partial();
