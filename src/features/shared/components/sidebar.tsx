@@ -4,10 +4,9 @@ import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import {
   IconHistory,
-  IconLockAccess,
+  IconLogout,
   IconPencil,
-  IconTools,
-  IconUserCheck,
+  IconWashTemperature6,
 } from "@tabler/icons-react";
 import { useShallow } from "zustand/react/shallow";
 import { useSiderStore } from "../stores/SiderStore";
@@ -16,6 +15,8 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useUiStore } from "../stores/UiStore";
+import UserProfile from "@/features/users/components/UserProfile";
+import ProtectedResource from "@/features/auth/guards/ProtectedResource";
 
 const { Sider } = Layout;
 
@@ -25,13 +26,17 @@ const getItem = (
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem => ({
-  key,
-  icon,
-  children,
-  label,
-});
+  children?: MenuItem[],
+  type?: "divider" | "item" | "submenu" | "group"
+): MenuItem => {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
+};
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -54,28 +59,27 @@ const Sidebar = () => {
     });
   };
 
-  const unAuthorizedItems: MenuItem[] = [
+  const dashBoardItems: MenuItem[] = [
     getItem(
-      <Link href="/products">View all items</Link>,
-      "/products",
-      <IconTools />
+      <Link href="/dashboard/products">List all products</Link>,
+      "/dashboard/products",
+      <IconWashTemperature6 />
     ),
-    getItem(<Link href="/login">Login</Link>, "/login", <IconLockAccess />),
     getItem(
-      <Link href="/sign-up">Sign-up</Link>,
-      "/sign-up",
-      <IconUserCheck />
+      <Link href="/dashboard/loans">List all loans</Link>,
+      "/dashboard/loans",
+      <IconHistory />
     ),
   ];
 
-  const authorizedItems: MenuItem[] = [
+  const actionItems: MenuItem[] = [
     getItem(
       <Link href="/products">View all items</Link>,
       "/products",
-      <IconTools />
+      <IconWashTemperature6 />
     ),
     getItem(
-      <Link href="/request/history">View loan history</Link>,
+      <Link href="/request/history">View your loan history</Link>,
       "/request/history",
       <IconHistory />
     ),
@@ -84,20 +88,21 @@ const Sidebar = () => {
       "/request/new-request",
       <IconPencil />
     ),
+  ];
+
+  const authItems: MenuItem[] = [
     getItem(
       <button onClick={handleLogout}>Logout</button>,
-      "/logout",
-      <IconUserCheck />
+      "/products",
+      <IconLogout />
     ),
   ];
 
-  const menuItems =
-    status === "loading"
-      ? []
-      : status === "unauthenticated"
-      ? unAuthorizedItems
-      : authorizedItems;
-
+  const paragraphStyle: any = {
+    fontSize: collapsed ? 12 : 16,
+    textAlign: collapsed ? "center" : "start",
+    fontWeight: 300,
+  };
   return (
     <Sider
       collapsible
@@ -106,18 +111,57 @@ const Sidebar = () => {
       width={200}
       collapsedWidth={80}
       className="sidebar"
+      theme="dark"
+      style={{
+        overflow: "auto",
+        height: "100vh",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 1,
+      }}
     >
       <Link href="/" className="-logo">
         <Image src="/assets/logo.jpeg" width={50} height={50} alt="logo" />
         {!collapsed && <h1>ECT Renting</h1>}
       </Link>
+
+      <UserProfile collapsed={collapsed} />
+
+      <br />
+
+      <ProtectedResource roles={["ADMIN"]}>
+        <p style={paragraphStyle}>Dashboard</p>
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={[pathname]}
+          selectedKeys={[pathname]}
+          mode="inline"
+          items={dashBoardItems}
+        />
+      </ProtectedResource>
+
+      <p style={paragraphStyle}>Actions</p>
       <Menu
         theme="dark"
         defaultSelectedKeys={[pathname]}
         selectedKeys={[pathname]}
         mode="inline"
-        items={menuItems}
+        items={actionItems}
       />
+
+      {status === "authenticated" && (
+        <div className="-auth">
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={[pathname]}
+            selectedKeys={[pathname]}
+            mode="inline"
+            items={authItems}
+          />
+        </div>
+      )}
     </Sider>
   );
 };

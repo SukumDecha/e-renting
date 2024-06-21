@@ -20,7 +20,7 @@ const ProtectedResource = ({ children, roles }: ProtectedResourceProps) => {
   ) {
     return null;
   }
-  
+
   return <div>{children}</div>;
 };
 

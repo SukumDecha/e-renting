@@ -26,7 +26,7 @@ const EditItemForm = ({ product }: IProps) => {
   const handleBack = () => {
     router.back();
   };
-  
+
   const handleSubmit = async (data: IUpdateProduct) => {
     try {
       await mutateAsync(data);
@@ -56,11 +56,11 @@ const EditItemForm = ({ product }: IProps) => {
     >
       <div className="-description">
         <ECTButton
-          type="danger"
+          color="danger"
           style={{
             marginBottom: "1rem",
           }}
-          fullWidth={true}
+          fullWidth
           onClick={handleBack}
         >
           Go back
@@ -138,7 +138,7 @@ const EditItemForm = ({ product }: IProps) => {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <ECTButton type="secondary" htmlType="submit">
+          <ECTButton color="secondary" htmlType="submit">
             Save changes
           </ECTButton>
         </Form.Item>

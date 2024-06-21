@@ -5,7 +5,6 @@ import { FloatButton, message, Space, Table } from "antd";
 
 import { ColumnsType } from "antd/es/table";
 
-import { IProduct } from "../type";
 import Loading from "@/features/shared/components/loading";
 import Image from "next/image";
 import { getImagePath } from "@/features/shared/helpers/upload";
@@ -13,6 +12,8 @@ import DeleteButton from "@/features/shared/components/dashboard/delete-button";
 import EditButton from "@/features/shared/components/dashboard/edit-button";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { renderTag } from "@/features/products/helper";
+import { IProduct } from "@/features/products/admin/type";
 const ProductDashBoard: React.FC = () => {
   const [isLoading, setLoading] = useState(true);
   const [products, setProducts] = useState<IProduct[]>([]);

@@ -31,7 +31,7 @@ const DeleteButton = ({ handleDelete }: IProps) => {
       onCancel={handleCancel}
     >
       <Button
-        type="primary"
+        color="primary"
         shape="circle"
         onClick={showPopconfirm}
         danger

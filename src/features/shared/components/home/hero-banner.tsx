@@ -22,18 +22,18 @@ const HeroBanner = () => {
       description: "You're logged out",
     });
   };
-  
+
   const renderButton = () => {
     if (status === "unauthenticated") {
       return (
-        <Link className="login" href="/login">
-          <ECTButton>เข้าสู่ระบบ</ECTButton>
-        </Link>
+        <ECTButton className="login" href="login">
+          เข้าสู่ระบบ
+        </ECTButton>
       );
     }
 
     return (
-      <ECTButton type="danger" onClick={handleLogout}>
+      <ECTButton color="danger" onClick={handleLogout}>
         ออกจากระบบ
       </ECTButton>
     );
@@ -59,9 +59,9 @@ const HeroBanner = () => {
         <p>คุณสามารถยืมอุปกรณ์ต่างๆภายในคณะ ECT ได้ที่นี่เลย</p>
         <div className="actions">
           {renderButton()}
-          <Link className="renting mt-2" href="/renting">
-            <ECTButton type="secondary">ยืมอุปกรณ์</ECTButton>
-          </Link>
+          <ECTButton className="renting mt-2" color="secondary" href="/renting">
+            ยืมอุปกรณ์
+          </ECTButton>
         </div>
       </div>
     </div>

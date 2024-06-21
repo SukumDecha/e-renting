@@ -1,3 +1,4 @@
+"use client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -24,7 +25,7 @@ const ProtectedRoute = ({ roles, children }: ProtectedRouteProps) => {
         message: "Unauthenticated",
         description: "Please login before access this page",
       });
-      router.replace("/auth/login");
+      router.replace("/login");
       return;
     }
     if (!roles) return setAllowed(true);
@@ -37,8 +38,8 @@ const ProtectedRoute = ({ roles, children }: ProtectedRouteProps) => {
       description: "You're not allowed to access this page",
     });
 
-    router.replace("/forbidden");
-  }, [roles, router, session?.user.role, status]);
+    router.replace("/");
+  }, [roles, router, session?.user.role, status, openNotification]);
 
   if (status === "loading") return <Loading />;
   if (isAllowed) return <>{children}</>;

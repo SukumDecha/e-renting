@@ -62,11 +62,11 @@ const CreateRequestForm = () => {
     >
       <div className="-description">
         <ECTButton
-          type="danger"
+          color="danger"
           style={{
             marginBottom: "1rem",
           }}
-          fullWidth={true}
+          fullWidth
           onClick={handleBack}
         >
           Go back
@@ -150,7 +150,7 @@ const CreateRequestForm = () => {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <ECTButton type="secondary" htmlType="submit">
+          <ECTButton color="secondary" htmlType="submit">
             Add new product
           </ECTButton>
         </Form.Item>

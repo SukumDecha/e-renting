@@ -3,14 +3,9 @@ import { Inter } from "next/font/google";
 
 import "@/styles/tailwinds/globals.css";
 import "@/styles/scss/components/index.scss";
-import { ConfigProvider, Layout } from "antd";
+import { ConfigProvider } from "antd";
 import theme from "@/styles/theme";
 import ClientProviders from "@/features/shared/components/client-provider";
-import Sidebar from "@/features/shared/components/sidebar";
-import { Content } from "antd/es/layout/layout";
-import { Suspense } from "react";
-import Loading from "@/features/shared/components/loading";
-import NotificationHandler from "@/features/shared/components/notification";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,31 +25,19 @@ export default function RootLayout({
         <ConfigProvider
           theme={{
             hashed: false,
+
             components: {
               Input: {
                 colorPrimary: theme.color.primary,
               },
+              Layout: {
+                bodyBg:
+                  "linear-gradient(180deg, rgba(145,207,255,1) 0%, rgba(231,232,209,1) 80%, rgba(255,255,255,1) 100%)",
+              },
             },
           }}
         >
-          <ClientProviders>
-            <Layout>
-              <Sidebar />
-
-              <Suspense
-                fallback={
-                  <>
-                    <Loading />
-                  </>
-                }
-              >
-                <Content className="container mx-auto relative p-4 ">
-                  {children}
-                </Content>
-                <NotificationHandler />
-              </Suspense>
-            </Layout>
-          </ClientProviders>
+          <ClientProviders>{children}</ClientProviders>
         </ConfigProvider>
       </body>
     </html>

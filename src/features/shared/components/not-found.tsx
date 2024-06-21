@@ -9,13 +9,10 @@ interface IProps {
 const NotFound = (
   { reason }: IProps = { reason: "This page doesn't existed" }
 ) => {
-  
   return (
     <div className="flex flex-col gap-8 justify-center items-center">
       <Empty description={reason}>
-        <Link href="/">
-          <ECTButton fullWidth={false}>Go back to home page</ECTButton>
-        </Link>
+        <ECTButton href="/">Go back to home page</ECTButton>
       </Empty>
     </div>
   );

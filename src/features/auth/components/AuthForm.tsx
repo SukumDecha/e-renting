@@ -127,7 +127,7 @@ const AuthForm = ({ kind, onSubmit }: IProps) => {
             </a>
           </Form.Item>
           <Form.Item style={{ marginBottom: "0px" }}>
-            <ECTButton type="primary" htmlType="submit">
+            <ECTButton color="primary" htmlType="submit">
               {title}
             </ECTButton>
             {kind === "login" && (

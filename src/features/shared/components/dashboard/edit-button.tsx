@@ -8,7 +8,7 @@ interface IProps {
 const EditButton = ({ href }: IProps) => {
   return (
     <Link href={href}>
-      <Button type="primary" shape="circle" icon={<IconPencil />} />
+      <Button color="primary" shape="circle" icon={<IconPencil />} />
     </Link>
   );
 };

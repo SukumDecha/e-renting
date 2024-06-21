@@ -8,7 +8,7 @@ services:
   #     network: host
   #     args:
   #       NEXT_PUBLIC_CLIENTVAR: "clientvar"
-  #       DATABASE_URL: "postgresql://myapp:mypassword@localhost:9111/absence-management?schema=public"
+  #       DATABASE_URL: "postgresql://myapp:mypassword@localhost:9111/renting-web?schema=public"
   #       NEXTAUTH_SECRET: "p0I0oiZgFGhha0eQKzumB5Awyeqe4hQ2jmaQ4t/HuMk="
   #       NEXTAUTH_URL: "http://localhost:3000"
   #       NEXTAPP_URL: "http://localhost:3000"
@@ -18,7 +18,7 @@ services:
   #   ports:
   #     - "3000:3000"
   #   environment:
-  #     DATABASE_URL: "postgresql://myapp:mypassword@db:5432/absence-management?schema=public"
+  #     DATABASE_URL: "postgresql://myapp:mypassword@db:5432/renting-web?schema=public"
   #   depends_on:
   #     - db
   db:
