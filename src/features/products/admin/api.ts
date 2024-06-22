@@ -63,7 +63,7 @@ export const update = async (
 };
 
 export const remove = async (slug: string) => {
-  const article = await db.product.delete({
+  const product = await db.product.delete({
     where: {
       slug,
     },
@@ -73,5 +73,5 @@ export const remove = async (slug: string) => {
   revalidatePath("/products");
   revalidatePath(`/products/${slug}`);
 
-  return article;
+  return product;
 };

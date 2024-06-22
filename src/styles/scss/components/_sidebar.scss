@@ -1,5 +1,6 @@
 .sidebar {
 
+
   .-logo {
     display: flex;
     align-items: center;
@@ -7,7 +8,9 @@
     
     h1 {
       margin-left: 12px;
-      color: white
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     img {
@@ -16,7 +19,7 @@
       height: auto;
 
       @media (min-width: $breakpoint-md) {
-          width: 100px;
+          width: 50px;
       }
     }
   }
@@ -28,8 +31,22 @@
     opacity: 0.7;
     padding: 8px;
   }
+
   .ant-menu-item, .ant-menu-submenu-title  {
     display: flex;
     align-items: center;
   }
+  
+  .ant-layout-sider-trigger {
+    width: calc(200px - 8px) !important;
+  }
 }
+
+.ant-layout-sider-collapsed {
+  .ant-layout-sider-trigger {
+    width: calc(80px - 8px) !important;
+  }
+}
+
+
+

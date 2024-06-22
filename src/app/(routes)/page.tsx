@@ -10,7 +10,7 @@ const page = async () => {
   return (
     <div className="flex flex-col gap-8 container mx-auto">
       <HeroBanner />
-      <ProductList products={products} />
+      <ProductList data={products} />
     </div>
   );
 };

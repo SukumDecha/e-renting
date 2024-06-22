@@ -23,7 +23,7 @@ const ProductItem = ({ product }: IProps) => {
   return (
     <Link href={`/products/${product.slug}`}>
       <Card
-        className="product-item"
+        className="-product-item"
         hoverable
         cover={
           <Image

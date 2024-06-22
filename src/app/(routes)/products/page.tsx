@@ -11,7 +11,7 @@ const ProductPage = async () => {
     return <NotFound reason="ไม่มีอุปกรณ์ที่สามารถยืมได้ในขณะนี้" />;
   }
 
-  return <ProductList products={products} />;
+  return <ProductList data={products} />;
 };
 
 export default ProductPage;

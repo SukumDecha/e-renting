@@ -57,7 +57,7 @@ const ProductItemDetail = ({ product }: IProps) => {
           <p className="details">{product.description}</p>
 
           <p>Currently {product.quantity} items left.</p>
-          <ECTButton color="secondary">Click to Borrow</ECTButton>
+          <ECTButton color="secondary">Add to cart</ECTButton>
         </div>
       </Card>
     </div>
