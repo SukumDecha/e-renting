@@ -9,6 +9,7 @@ import ECTButton from "@/features/shared/components/button";
 import { renderTag } from "../helper";
 import { useRouter } from "next/navigation";
 import { IconArrowLeft } from "@tabler/icons-react";
+import { useUiStore } from "@/features/shared/stores/UiStore";
 
 interface IProps {
   product: IProduct;
@@ -16,6 +17,38 @@ interface IProps {
 
 const ProductItemDetail = ({ product }: IProps) => {
   const router = useRouter();
+  const openNotification = useUiStore((state) => state.openNotification);
+
+  const handleAddToCart = async () => {
+    const data = {
+      productId: product.id,
+      amount: 1,
+    };
+    const res = await fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const reqBody = await res.json();
+
+      openNotification({
+        type: "error",
+        message: "Something went wrong",
+        description: reqBody.err || "Error while adding product to your cart",
+      });
+      return;
+    }
+
+    openNotification({
+      type: "success",
+      message: "Added to cart",
+      description: `${product.name} has been added to your cart`,
+    });
+  };
 
   const renderTitle = () => {
     return (
@@ -57,7 +90,9 @@ const ProductItemDetail = ({ product }: IProps) => {
           <p className="details">{product.description}</p>
 
           <p>Currently {product.quantity} items left.</p>
-          <ECTButton color="secondary">Add to cart</ECTButton>
+          <ECTButton color="secondary" onClick={handleAddToCart}>
+            Add to cart
+          </ECTButton>
         </div>
       </Card>
     </div>

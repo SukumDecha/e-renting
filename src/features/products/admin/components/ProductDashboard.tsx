@@ -15,7 +15,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { renderTag } from "../../helper";
 
-const ProductDashBoard: React.FC = () => {
+const ProductDashBoard = () => {
   const [isLoading, setLoading] = useState(true);
   const [products, setProducts] = useState<IProduct[]>([]);
   const router = useRouter();

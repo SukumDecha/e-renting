@@ -19,7 +19,7 @@ const DeleteButton = ({ handleDelete }: IProps) => {
   return (
     <Popconfirm
       title="Are you sure?"
-      description="Would you like to delete this product"
+      description="Would you like to delete this"
       okText="Confirm"
       okType="default"
       cancelButtonProps={{

@@ -1,4 +1,4 @@
-import { findById, updateCart } from "@/features/cart/api";
+import { deleteCart, findById, updateCart } from "@/features/cart/api";
 import { IUpdateCart } from "@/features/cart/type";
 import { updateCartSchema } from "@/features/cart/validator";
 
@@ -26,4 +26,18 @@ export const PATCH = async (req: Request, { params: { id } }: PathParams) => {
       status: 422,
     });
   }
+};
+
+export const DELETE = async (_req: Request, { params: { id } }: PathParams) => {
+  const cart = await deleteCart(+id);
+
+  if (cart === null) {
+    return new Response(`Cart not found`, {
+      status: 404,
+    });
+  }
+
+  return new Response(null, {
+    status: 204,
+  });
 };

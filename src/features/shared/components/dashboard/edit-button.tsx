@@ -3,9 +3,20 @@ import { Button } from "antd";
 import Link from "next/link";
 
 interface IProps {
-  href: string;
+  href?: string;
+  handleEdit?: () => void;
 }
-const EditButton = ({ href }: IProps) => {
+const EditButton = ({ href, handleEdit }: IProps) => {
+  if (!href) {
+    return (
+      <Button
+        color="primary"
+        shape="circle"
+        icon={<IconPencil />}
+        onClick={handleEdit}
+      />
+    );
+  }
   return (
     <Link href={href}>
       <Button color="primary" shape="circle" icon={<IconPencil />} />

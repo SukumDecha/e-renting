@@ -8,6 +8,8 @@ export const GET = async () => {
   if (!session) return Response.json({ err: "Please Login" }, { status: 401 });
 
   const carts = await findAll(+session.user.id);
+  console.log("User: " + session.user.id);
+  console.log("Carts: " + carts);
 
   return Response.json(carts);
 };

@@ -5,6 +5,18 @@ import { addCartSchema, updateCartSchema } from "./validator";
 export const findAll = async (userId: number) => {
   return await prisma.cart.findMany({
     where: { userId },
+    select: {
+      id: true,
+      userId: true,
+      amount: true,
+      productId: true,
+      product: {
+        select: {
+          image: true,
+          name: true,
+        },
+      },
+    },
   });
 };
 
@@ -27,9 +39,26 @@ export const updateCart = async (
   id: number,
   input: z.infer<typeof updateCartSchema>
 ) => {
+  const product = await prisma.product.findUnique({
+    where: {
+      id: input.productId,
+    },
+    select: {
+      quantity: true,
+    },
+  });
+
+  if (!product) {
+    throw new Error(`Product doesn't exist with ID: ${id}`);
+  }
+
+  if (product.quantity < input.quantity) {
+    throw new Error(`Product out of stock...`);
+  }
+
   const updatedCart = await prisma.cart.update({
     where: { id },
-    data: { amount: input.amount },
+    data: { amount: input.quantity },
   });
 
   if (!updatedCart) {
