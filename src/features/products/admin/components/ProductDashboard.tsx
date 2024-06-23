@@ -14,11 +14,13 @@ import EditButton from "@/features/shared/components/dashboard/edit-button";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { renderTag } from "../../helper";
+import { useCartStore } from "@/features/shared/stores/CartStore";
 
 const ProductDashBoard = () => {
   const [isLoading, setLoading] = useState(true);
   const [products, setProducts] = useState<IProduct[]>([]);
   const router = useRouter();
+  const cartCount = useCartStore((state) => state.selectedCart.length);
 
   const handleDelete = async (name: string, slug: string) => {
     const res = await fetch(`/api/admin/products/${slug}`, {

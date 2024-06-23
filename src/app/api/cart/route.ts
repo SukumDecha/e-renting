@@ -22,12 +22,12 @@ export const POST = async (req: Request) => {
 
   try {
     const form = await addCartSchema.parseAsync(body);
-    const leave = await addCart(+session.user.id, form);
-    return new Response(JSON.stringify(leave), {
+    const cart = await addCart(+session.user.id, form);
+    return new Response(JSON.stringify(cart), {
       status: 201,
     });
-  } catch (error) {
-    return new Response(JSON.stringify(error), {
+  } catch (error: any) {
+    return new Response(JSON.stringify({ err: error.message }), {
       status: 422,
     });
   }

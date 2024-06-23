@@ -15,7 +15,7 @@ const ProductLayout = async ({ children }: IProps) => {
       return <FloatButton icon={<IconLogin />} href="/login" />;
     }
 
-    return <FloatButton icon={<IconShoppingCart />} href="/carts" />;
+    return <FloatButton icon={<IconShoppingCart />}  href="/carts" />;
   };
   const layoutStyle = {
     padding: 8,

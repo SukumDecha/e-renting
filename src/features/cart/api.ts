@@ -30,6 +30,17 @@ export const addCart = async (
   userId: number,
   input: z.infer<typeof addCartSchema>
 ) => {
+  const cart = await prisma.cart.findFirst({
+    where: {
+      userId,
+      productId: input.productId,
+    },
+  });
+
+  if (cart) {
+    throw new Error(`This product is already in your cart`);
+  }
+
   return await prisma.cart.create({
     data: { userId, ...input },
   });

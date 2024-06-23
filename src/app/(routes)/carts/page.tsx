@@ -1,8 +1,12 @@
-import CartList from "@/features/cart/components/CartList";
+import CartCheckout from "@/features/cart/components/CartCheckout";
 import React from "react";
 
 const CartPage = () => {
-  return <CartList />;
+  return (
+    <div className="">
+      <CartCheckout />
+    </div>
+  );
 };
 
 export default CartPage;

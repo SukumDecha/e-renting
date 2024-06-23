@@ -1,43 +1,31 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools } from "zustand/middleware";
-import { ICart } from "../types/ICart";
+import { ICart } from "@/features/cart/type";
 
 export interface CartState {
-  cart: ICart[];
-  addCart: (cart: ICart) => void;
-  removeCart: (cart: ICart) => void;
-  clearCart: () => void;
+  selectedCart: ICart[];
+  setSelectedCart: (cart: ICart[]) => void;
+  clearSelectedCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(
   devtools(
     immer((set) => ({
-      cart: [],
-      addCart(cart) {
+      selectedCart: [],
+      setSelectedCart(cart) {
         set(
           (state) => {
-            state.cart.push(cart);
+            state.selectedCart = cart;
           },
           false,
-          { type: "cart/addCart" }
+          { type: "cart/setCart" }
         );
       },
-      removeCart(cart) {
+      clearSelectedCart() {
         set(
           (state) => {
-            state.cart = state.cart.filter(
-              (item: ICart) => item.id !== cart.id
-            );
-          },
-          false,
-          { type: "cart/removeCart" }
-        );
-      },
-      clearCart() {
-        set(
-          (state) => {
-            state.cart = [];
+            state.selectedCart = [];
           },
           false,
           { type: "cart/clearCart" }
