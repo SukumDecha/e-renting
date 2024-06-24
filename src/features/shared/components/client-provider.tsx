@@ -11,6 +11,7 @@ import { useShallow } from "zustand/react/shallow";
 import Sidebar from "@/features/shared/components/sidebar";
 import Loading from "@/features/shared/components/loading";
 import NotificationHandler from "@/features/shared/components/notification";
+import ECTFloatButton from "./float-button";
 
 const queryClient = new QueryClient();
 
@@ -35,13 +36,16 @@ const ClientProviders = ({ children }: ClientProvidersProps) => {
             }
           >
             <Content
-              className="container mx-auto relative"
               style={{
+                padding: 24,
                 marginLeft: !collapsed ? 220 : 100,
+                overflow: "auto",
               }}
+              className="container mx-auto"
             >
               {children}
             </Content>
+            <ECTFloatButton />
             <NotificationHandler />
           </Suspense>
         </Layout>

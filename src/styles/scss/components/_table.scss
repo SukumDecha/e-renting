@@ -2,12 +2,29 @@
     background-color: white;
     border-radius: 10px;
     padding: 16px;
+
     
     .-title {
         display: flex;
         justify-content: space-between;
     }
 
+    .-avatar, .-product {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .-tag {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    
     .-icon {
         display: flex;
         align-items: center;

@@ -2,10 +2,17 @@ import RequestTable from "@/features/requests/components/request-table";
 import React from "react";
 
 const RequestPage = () => {
+  const titleStyle: React.CSSProperties = {
+    textAlign: "center",
+    fontSize: "2rem",
+  };
+
   return (
-    <div className="flex justify-center items-center">
+    <>
+      <h1 style={titleStyle}>ประวัติการยืม</h1>
+      <br />
       <RequestTable />
-    </div>
+    </>
   );
 };
 

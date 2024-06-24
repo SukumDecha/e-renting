@@ -16,6 +16,10 @@ export const findAll = async ({
     status: true,
     reason: true,
     updatedAt: true,
+    rejectionReason: true,
+    productQuantity: true,
+    returnDate: true,
+    requestDate: true,
     user: isAdmin ? { select: { name: true, image: true } } : false,
     product: {
       select: {
@@ -23,7 +27,6 @@ export const findAll = async ({
         image: true,
       },
     },
-    productQuantity: true,
   };
 
   const whereClause = isAdmin ? undefined : { userId };

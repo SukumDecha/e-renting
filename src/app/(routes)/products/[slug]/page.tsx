@@ -1,5 +1,6 @@
 import { findBySlug } from "@/features/products/api";
 import ProductItemDetail from "@/features/products/components/product-item-detail";
+import { Flex } from "antd";
 import React from "react";
 
 interface IProps {
@@ -12,7 +13,11 @@ const ProductItemPage = async ({ params }: IProps) => {
 
   if (!product) return null;
 
-  return <ProductItemDetail product={product} />;
+  return (
+    <Flex justify="center" align="center">
+      <ProductItemDetail product={product} />
+    </Flex>
+  );
 };
 
 export default ProductItemPage;

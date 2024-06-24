@@ -1,6 +1,6 @@
 "use client";
 
-import { IconPlus } from "@tabler/icons-react";
+import { CSSProperties } from "react";
 import CartSummary from "./cart-summary";
 import CartTable from "./cart-table";
 import { useCartStore } from "@/features/shared/stores/CartStore";

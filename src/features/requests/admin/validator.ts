@@ -34,10 +34,11 @@ export const addRequestSchema = z.object({
   }),
 });
 
-export const updateRequestSchema = addRequestSchema
-  .extend({
-    status: z.enum(["PENDING", "APPROVED", "REJECTED", "RETURNED"]),
-  })
-  .partial({
-    rejectionReason: true,
-  });
+export const updateRequestSchema = z.object({
+  status: z.enum(["PENDING", "APPROVED", "REJECTED", "RETURNED"]),
+  rejectionReason: z.string().optional(),
+});
+
+export const updateRequestStatusSchema = z.object({
+  status: z.enum(["RETURNED"]),
+});

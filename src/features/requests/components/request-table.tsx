@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { message, Space, Table, Button, Divider } from "antd";
+import { message, Table, Button, Divider, Tooltip } from "antd";
 
 import Image from "next/image";
 import { getImagePath } from "@/features/shared/helpers/upload";
 import DeleteButton from "@/features/shared/components/dashboard/delete-button";
 import { ColumnType } from "antd/es/table";
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconArrowBackUp, IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
 import { IRequest } from "../admin/type";
 import { renderStatus } from "../helper";
@@ -25,7 +25,7 @@ const RequestTable = () => {
       setRequests(data);
     } catch (error) {
       console.error("Fetch error: ", error);
-      message.error("Failed to load carts");
+      message.error("Failed to load requests");
     }
   }, []);
 
@@ -83,11 +83,22 @@ const RequestTable = () => {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      responsive: ["lg"],
     },
     {
       title: "Product",
       key: "product",
-      render: (_, record) => <p>{record.product.name}</p>,
+      render: (_, record) => (
+        <div className="-product">
+          <p>{record.product.name}</p>
+          <Image
+            src={getImagePath(record.product.image) || "/assets/no-image.png"}
+            alt="product-img"
+            width={50}
+            height={50}
+          />
+        </div>
+      ),
     },
     {
       title: "Quantity",
@@ -98,25 +109,19 @@ const RequestTable = () => {
       },
     },
     {
-      title: "Image",
-      key: "image",
-      render: (_, record) => (
-        <Image
-          src={
-            getImagePath(record.product.image) || "/assets/no-image.png"
-          }
-          alt="product-img"
-          width={50}
-          height={50}
-        />
-      ),
-    },
-    {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (_, record) => {
-        return <p>{renderStatus(record.status)}</p>;
+        if (record.status === "REJECTED") {
+          return (
+            <div className="-tag">
+              {renderStatus(record.status, record.rejectionReason!)}
+            </div>
+          );
+        }
+
+        return <div className="-tag">{renderStatus(record.status)}</div>;
       },
     },
     {
@@ -129,18 +134,21 @@ const RequestTable = () => {
 
         if (status === "PENDING" || status === "REJECTED") {
           return (
-            <Space>
+            <Tooltip title="Delete this request">
               <DeleteButton onDelete={() => handleDelete(record.id)} />
-            </Space>
+            </Tooltip>
           );
         }
 
         return (
-          <Space>
-            <Button color="primary" onClick={() => save(record.id)}>
-              Return this product
-            </Button>
-          </Space>
+          <Tooltip title="Return this product">
+            <Button
+              shape="circle"
+              color="green"
+              onClick={() => save(record.id)}
+              icon={<IconArrowBackUp />}
+            />
+          </Tooltip>
         );
       },
     },
@@ -152,6 +160,9 @@ const RequestTable = () => {
       onChange: (keys: React.Key[]) => {
         setSelectedRowKeys(keys);
       },
+      getCheckboxProps: (record: IRequest) => ({
+        disabled: record.status === "APPROVED",
+      }),
     }),
     [selectedRowKeys]
   );
@@ -189,6 +200,9 @@ const RequestTable = () => {
         rowKey="id"
         rowSelection={rowSelection}
         {...tableProps}
+        style={{
+          overflow: "auto",
+        }}
       />
     </div>
   );

@@ -15,7 +15,7 @@ export const useCreateProduct = () => {
 
       console.log(form.image.file.originFileObj);
 
-      const res = await fetch(`/api/admin/products`, {
+      const res = await fetch(`/api/admin/product`, {
         method: "POST",
         body: formData,
       });
@@ -38,13 +38,13 @@ export const useEditProduct = (slug: string) => {
       if (form.quantity) formData.append("quantity", form.quantity.toString());
       if (form.image) formData.append("image", form.image.file.originFileObj);
 
-      const res = await fetch(`/api/admin/products/${slug}`, {
+      const res = await fetch(`/api/admin/product/${slug}`, {
         method: "PATCH",
         body: formData,
       });
 
       if (!res.ok) {
-        throw new Error(`Error while fetching: /api/admin/products/${slug}`);
+        throw new Error(`Error while fetching: /api/admin/product/${slug}`);
       }
 
       const product = await (res.json() as Promise<IProduct>);

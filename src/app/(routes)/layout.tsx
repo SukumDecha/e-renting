@@ -6,7 +6,6 @@ import "@/styles/scss/components/index.scss";
 import { ConfigProvider } from "antd";
 import theme from "@/styles/theme";
 import ClientProviders from "@/features/shared/components/client-provider";
-import ECTFloatButton from "@/features/shared/components/float-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,10 +37,7 @@ export default function RootLayout({
             },
           }}
         >
-          <ClientProviders>
-            {children}
-            <ECTFloatButton />
-          </ClientProviders>
+          <ClientProviders>{children}</ClientProviders>
         </ConfigProvider>
       </body>
     </html>

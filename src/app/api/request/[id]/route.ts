@@ -1,6 +1,7 @@
+import { getServerAuthSession } from "@/features/auth/auth";
 import { deleteRequest, updateRequest } from "@/features/requests/admin/api";
 import { IUpdateRequest } from "@/features/requests/admin/type";
-import { updateRequestSchema } from "@/features/requests/admin/validator";
+import { updateRequestStatusSchema } from "@/features/requests/admin/validator";
 import { findById } from "@/features/requests/api";
 
 interface PathParams {
@@ -16,14 +17,21 @@ export const GET = async (_req: Request, { params: { id } }: PathParams) => {
 };
 
 export const PATCH = async (req: Request, { params: { id } }: PathParams) => {
-  const body = await (req.json() as Promise<IUpdateRequest>);
+  const session = await getServerAuthSession();
 
+  if (!session === null) {
+    return new Response(JSON.stringify({ err: "Please Login" }), {
+      status: 401,
+    });
+  }
+
+  const body = await (req.json() as Promise<IUpdateRequest>);
   try {
-    const form = await updateRequestSchema.parseAsync(body);
-    const leave = await updateRequest(+id, form);
-    return Response.json(leave);
+    const form = await updateRequestStatusSchema.parseAsync(body);
+    const request = await updateRequest(+id, form);
+    return Response.json(request);
   } catch (error) {
-    return new Response(JSON.stringify(error), {
+    return new Response(JSON.stringify({ err: error }), {
       status: 422,
     });
   }

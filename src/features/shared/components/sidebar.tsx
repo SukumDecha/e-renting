@@ -5,6 +5,7 @@ import {
   IconHistory,
   IconLogout,
   IconPencil,
+  IconShoppingBag,
   IconWashTemperature6,
 } from "@tabler/icons-react";
 import { useShallow } from "zustand/react/shallow";
@@ -43,8 +44,8 @@ const Sidebar = () => {
       roles: ["ADMIN"],
     },
     {
-      label: <Link href="/dashboard/loans">List all loans</Link>,
-      key: "/dashboard/loans",
+      label: <Link href="/dashboard/requests">List all requests</Link>,
+      key: "/dashboard/requests",
       icon: <IconHistory />,
       roles: ["ADMIN"],
     },
@@ -59,9 +60,9 @@ const Sidebar = () => {
       icon: <IconHistory />,
     },
     {
-      label: <Link href="/request/new-request">Create a new loan</Link>,
-      key: "/request/new-request",
-      icon: <IconPencil />,
+      label: <Link href="/carts">View your carts</Link>,
+      key: "/carts",
+      icon: <IconShoppingBag />,
     },
     {
       label: <button onClick={handleLogout}>Logout</button>,

@@ -11,18 +11,16 @@ import Image from "next/image";
 import { getImagePath } from "@/features/shared/helpers/upload";
 import DeleteButton from "@/features/shared/components/dashboard/delete-button";
 import EditButton from "@/features/shared/components/dashboard/edit-button";
-import { IconPlus } from "@tabler/icons-react";
+
 import { useRouter } from "next/navigation";
 import { renderTag } from "../../helper";
-import { useCartStore } from "@/features/shared/stores/CartStore";
 
 const ProductDashBoard = () => {
   const [isLoading, setLoading] = useState(true);
   const [products, setProducts] = useState<IProduct[]>([]);
-  const router = useRouter();
 
   const handleDelete = async (name: string, slug: string) => {
-    const res = await fetch(`/api/admin/products/${slug}`, {
+    const res = await fetch(`/api/admin/product/${slug}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
