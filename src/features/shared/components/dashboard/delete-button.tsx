@@ -1,11 +1,11 @@
 import { IconTrashFilled } from "@tabler/icons-react";
 import { Button, Popconfirm } from "antd";
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 
 interface IProps {
-  handleDelete: (data: any) => void;
+  onDelete: (data: any) => void;
 }
-const DeleteButton = ({ handleDelete }: IProps) => {
+const DeleteButton = ({ onDelete }: IProps) => {
   const [open, setOpen] = useState(false);
 
   const showPopconfirm = () => {
@@ -27,7 +27,7 @@ const DeleteButton = ({ handleDelete }: IProps) => {
         ghost: true,
       }}
       open={open}
-      onConfirm={handleDelete}
+      onConfirm={onDelete}
       onCancel={handleCancel}
     >
       <Button

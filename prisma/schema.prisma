@@ -26,24 +26,27 @@ model Request {
   reason          String
   rejectionReason String?
   userId          Int
+  productId       Int
+  productQuantity Int
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   requestDate     DateTime
+  returnDate      DateTime
+  product         Product       @relation(fields: [productId], references: [id])
   user            User          @relation(fields: [userId], references: [id])
-
-  @@unique([userId, requestDate])
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
-  slug        String   @unique
+  slug        String    @unique
   image       String
   description String
   quantity    Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   Cart        Cart[]
+  Request     Request[]
 }
 
 model Cart {

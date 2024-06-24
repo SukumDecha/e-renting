@@ -1,0 +1,32 @@
+.table {
+    background-color: white;
+    border-radius: 10px;
+    padding: 16px;
+    
+    .-title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .-icon {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .-footer {
+        display: flex;
+        justify-content: end;
+        gap: 8px;
+    }
+
+    h4 {
+        font-size: 28px;
+        font-weight: 500;
+    }
+
+    h3 {
+        font-size: 24px;
+        font-weight: 500;
+    }
+}

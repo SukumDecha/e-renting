@@ -1,4 +1,4 @@
-import CreateItemForm from "@/features/products/admin/components/CreateItemForm";
+import CreateItemForm from "@/features/products/admin/components/create-item-form";
 
 import React from "react";
 

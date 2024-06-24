@@ -4,16 +4,16 @@ import Link from "next/link";
 
 interface IProps {
   href?: string;
-  handleEdit?: () => void;
+  onEdit?: () => void;
 }
-const EditButton = ({ href, handleEdit }: IProps) => {
+const EditButton = ({ href, onEdit }: IProps) => {
   if (!href) {
     return (
       <Button
         color="primary"
         shape="circle"
         icon={<IconPencil />}
-        onClick={handleEdit}
+        onClick={onEdit}
       />
     );
   }

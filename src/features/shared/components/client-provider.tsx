@@ -35,7 +35,7 @@ const ClientProviders = ({ children }: ClientProvidersProps) => {
             }
           >
             <Content
-              className="container mx-auto relative p-4"
+              className="container mx-auto relative"
               style={{
                 marginLeft: !collapsed ? 220 : 100,
               }}

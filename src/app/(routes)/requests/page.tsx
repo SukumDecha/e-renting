@@ -1,10 +1,12 @@
-import { useSession } from "next-auth/react";
+import RequestTable from "@/features/requests/components/request-table";
 import React from "react";
 
 const RequestPage = () => {
-  const { data: session, status } = useSession();
-  const user = session?.user.id;
-  return <div>Your request</div>;
+  return (
+    <div className="flex justify-center items-center">
+      <RequestTable />
+    </div>
+  );
 };
 
 export default RequestPage;

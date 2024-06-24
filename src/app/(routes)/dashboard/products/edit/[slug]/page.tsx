@@ -1,5 +1,5 @@
 "use client";
-import EditItemForm from "@/features/products/admin/components/EditItemForm";
+import EditItemForm from "@/features/products/admin/components/edit-item-form";
 import { useFindProductBySlug } from "@/features/products/hooks/api";
 import Loading from "@/features/shared/components/loading";
 import NotFound from "@/features/shared/components/not-found";

@@ -1,6 +1,6 @@
 import { IProduct } from "@/features/products/admin/type";
 import { findAll } from "@/features/products/api";
-import ProductList from "@/features/products/components/ProductList";
+import ProductList from "@/features/products/components/product-list";
 import NotFound from "@/features/shared/components/not-found";
 import React from "react";
 

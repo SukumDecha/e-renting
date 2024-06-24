@@ -9,12 +9,12 @@ import {
 } from "@tabler/icons-react";
 import { useShallow } from "zustand/react/shallow";
 import { useSiderStore } from "../stores/SiderStore";
-import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useUiStore } from "../stores/UiStore";
-import UserProfile from "@/features/users/components/UserProfile";
-import ProtectedResource from "@/features/auth/guards/ProtectedResource";
+import Link from "next/link";
+import UserProfile from "@/features/users/components/user-profile";
+import ProtectedResource from "@/features/auth/guards/protected-resource";
 
 const { Sider } = Layout;
 
@@ -54,8 +54,8 @@ const Sidebar = () => {
       icon: <IconWashTemperature6 />,
     },
     {
-      label: <Link href="/request/history">View your loan history</Link>,
-      key: "/request/history",
+      label: <Link href="/requests">View your loan history</Link>,
+      key: "/requests",
       icon: <IconHistory />,
     },
     {

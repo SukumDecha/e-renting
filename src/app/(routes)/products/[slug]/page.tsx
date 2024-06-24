@@ -1,5 +1,5 @@
 import { findBySlug } from "@/features/products/api";
-import ProductItemDetail from "@/features/products/components/ProductItemDetail";
+import ProductItemDetail from "@/features/products/components/product-item-detail";
 import React from "react";
 
 interface IProps {

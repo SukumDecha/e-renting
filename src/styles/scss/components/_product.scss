@@ -79,14 +79,19 @@
         }
 
         .-card-details {
-            .title {
+            .-title {
                 display: flex;
                 align-items: center;
                 gap: .5rem;
             }
 
-            .details {
+            .-details {
                 padding: 2px;
+            }
+
+            .-quantity {
+                background-color: rgba(255, 255, 255, 0.7) !important;
+                text-decoration: underline;
             }
 
             h4 {

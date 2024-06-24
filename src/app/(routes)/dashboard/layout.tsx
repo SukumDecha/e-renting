@@ -1,4 +1,4 @@
-import ProtectedRoute from "@/features/auth/guards/ProtectedRoute";
+import ProtectedRoute from "@/features/auth/guards/protected-route";
 import React, { ReactNode } from "react";
 
 interface IProps {

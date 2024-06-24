@@ -1,11 +1,15 @@
 @import "../variables/breakpoints";
 @import "../variables/colors";
 
+// Shared components
 @import "./ant";
-@import "./hero";
+@import "./table";
 @import "./button";
-@import "./product";
 @import "./form";
+
+
+@import "./hero";
+@import "./product";
 @import "./sidebar";
 @import "./user";
 @import "./cart";
