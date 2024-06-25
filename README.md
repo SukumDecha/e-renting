@@ -69,7 +69,7 @@ An e-renting website created to improve knowledge in Next.js, React Query, Ant D
 
 2. Install dependencies:
    ```bash
-   Install dependencies:
+   pnpm install
    ```
 
 3. Set up environment variables:
@@ -82,10 +82,10 @@ An e-renting website created to improve knowledge in Next.js, React Query, Ant D
 
 4. Run Prisma migrations to set up the database:
    ```bash
-   npx prisma migrate dev
+   pnpm dlx prisma migrate dev
    ```
 
 ### Running the Application
 
-Start the development server via ``` npm run dev``` and then open your browser and navigate to `http://localhost:3000`.
+Start the development server via ```pnpm dev``` and then open your browser and navigate to `http://localhost:3000`.
 
