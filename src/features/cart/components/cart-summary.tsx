@@ -1,20 +1,19 @@
+"use client";
+
 import { Divider, Form } from "antd";
 import { useState } from "react";
-import { ICart } from "../type";
 import { DatePicker, Space } from "antd";
 import ECTButton from "@/features/shared/components/button";
 import TextArea from "antd/es/input/TextArea";
 import { useUiStore } from "@/features/shared/stores/UiStore";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/features/shared/stores/CartStore";
 
 const { RangePicker } = DatePicker;
 
-interface IProps {
-  carts: ICart[];
-}
-
-const CartSummary = ({ carts }: IProps) => {
+const CartSummary = () => {
   const [loading, setLoading] = useState(false);
+  const carts = useCartStore((state) => state.selectedCart);
   const openNotification = useUiStore((state) => state.openNotification);
   const router = useRouter();
 
@@ -42,6 +41,7 @@ const CartSummary = ({ carts }: IProps) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            cartId: cart.id,
             productId: cart.productId,
             productQuantity: cart.amount,
             reason: values.reason,

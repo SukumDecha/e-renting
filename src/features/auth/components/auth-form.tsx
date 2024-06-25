@@ -133,7 +133,7 @@ const AuthForm = ({ kind, onSubmit }: IProps) => {
             {kind === "login" && (
               <div style={styles.footer}>
                 <Text style={styles.text}>Don&apos;t have an account?</Text>{" "}
-                <Link href="">Sign up now</Link>
+                <Link href="/sign-up">Sign up now</Link>
               </div>
             )}
           </Form.Item>

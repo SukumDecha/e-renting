@@ -110,7 +110,10 @@
 }
 
 .dashboard-product {
+    overflow: scroll;
+    background-color: white;
     padding: 24px;
+    border-radius: 10px;
 
     h4 {
         font-size: 28px;

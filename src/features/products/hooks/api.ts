@@ -1,10 +1,12 @@
 import { slugify } from "@/features/shared/helpers/slugify";
 import { IAddProduct, IProduct, IUpdateProduct } from "../admin/type";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateProduct = () => {
-  return {
-    mutateAsync: async (form: IAddProduct) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (form: IAddProduct) => {
       const formData = new FormData();
       formData.append("name", form.name);
       formData.append("description", form.description);
@@ -12,8 +14,6 @@ export const useCreateProduct = () => {
       formData.append("quantity", form.quantity + "");
 
       if (form.image) formData.append("image", form.image.file.originFileObj);
-
-      console.log(form.image.file.originFileObj);
 
       const res = await fetch(`/api/admin/product`, {
         method: "POST",
@@ -23,10 +23,17 @@ export const useCreateProduct = () => {
       const product = await (res.json() as Promise<IProduct>);
       return product;
     },
-  };
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["products"],
+      });
+    },
+  });
 };
 
 export const useEditProduct = (slug: string) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (form: IUpdateProduct) => {
       const formData = new FormData();
@@ -50,6 +57,14 @@ export const useEditProduct = (slug: string) => {
       const product = await (res.json() as Promise<IProduct>);
       return product;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["products", slug],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["products"],
+      });
+    },
   });
 };
 
@@ -57,7 +72,7 @@ export const useFindAllProduct = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/product");
       const products = await (res.json() as Promise<IProduct>);
 
       return products;
@@ -69,7 +84,7 @@ export const useFindProductBySlug = (slug: string) => {
   return useQuery({
     queryKey: ["products", slug],
     queryFn: async () => {
-      const res = await fetch(`/api/products/${slug}`);
+      const res = await fetch(`/api/product/${slug}`);
       if (!res.ok) {
         throw new Error("Network response was not ok");
       }

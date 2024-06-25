@@ -1,7 +1,5 @@
 import { remove, update } from "@/features/products/admin/api";
 import { IUpdateProduct } from "@/features/products/admin/type";
-import { updateProductSchema } from "@/features/products/admin/validator";
-
 interface PathParams {
   params: {
     slug: string;

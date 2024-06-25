@@ -1,8 +1,12 @@
 import prisma from "@/features/shared/db";
 import { z } from "zod";
 import { addRequestSchema, updateRequestSchema } from "./validator";
+import { findById } from "../api";
+import { revalidatePath } from "next/cache";
+import { deleteCart } from "@/features/cart/api";
+import { updateQuantity as updateProductQuantity } from "@/features/products/admin/api";
 
-const getUserAndProduct = async (userId: number, productId: number) => {
+const validateUserAndProduct = async (userId: number, productId: number) => {
   const [user, product] = await Promise.all([
     prisma.user.findUnique({ where: { id: userId }, select: { id: true } }),
     prisma.product.findUnique({
@@ -18,84 +22,78 @@ const getUserAndProduct = async (userId: number, productId: number) => {
   return { user, product };
 };
 
-const deleteCart = async (userId: number, productId: number) => {
-  const cart = await prisma.cart.delete({
-    where: {
-      userId_productId: {
-        userId,
-        productId,
-      },
-    },
-  });
-
-  if (!cart)
-    throw new Error(
-      `Cart not found for user ID: ${userId} and product ID: ${productId}`
-    );
-
-  return cart;
-};
-
 export const addRequest = async (
   userId: number,
   input: z.infer<typeof addRequestSchema>
 ) => {
-  const { product } = await getUserAndProduct(userId, input.productId);
-  const cart = await deleteCart(userId, input.productId);
+  await validateUserAndProduct(userId, input.productId);
 
-  await prisma.request.create({
+  await deleteCart(input.cartId);
+
+  const request = prisma.request.create({
     data: {
       userId,
       productId: input.productId,
-      productQuantity: cart.amount,
+      productQuantity: input.productQuantity,
       reason: input.reason,
       requestDate: input.requestDate,
       returnDate: input.returnDate,
     },
   });
+
+  revalidatePath("/api/request");
+  return request;
 };
 
 export const updateRequest = async (
   id: number,
   input: z.infer<typeof updateRequestSchema>
 ) => {
-  const existingRequest = await prisma.request.findUnique({ where: { id } });
+  const { status, rejectionReason } = input;
+  const existingRequest = await findById(id);
 
   if (!existingRequest) throw new Error(`Request not found with ID: ${id}`);
-  if (input.status === "REJECTED" && !input.rejectionReason) {
-    throw new Error(`Rejection reason is required when status is REJECTED`);
+
+  if (status === "REJECTED" && !rejectionReason) {
+    throw new Error(`Rejection reason is required when status is 'REJECTED'`);
   }
 
-  const updateProductQuantity = async (increment: boolean) => {
-    await prisma.product.update({
-      where: { id: existingRequest.productId },
-      data: {
-        quantity: {
-          [increment ? "increment" : "decrement"]:
-            existingRequest.productQuantity,
-        },
-      },
-    });
-  };
+  await validateUserAndProduct(
+    existingRequest.userId,
+    existingRequest.productId
+  );
 
-  if (input.status === "APPROVED") {
-    await updateProductQuantity(false);
-  } else if (input.status === "RETURNED") {
-    await updateProductQuantity(true);
+  if (status === "APPROVED") {
+    updateProductQuantity(
+      existingRequest.productId,
+      existingRequest.productQuantity,
+      false
+    );
+  } else if (status === "RETURNED") {
+    updateProductQuantity(
+      existingRequest.productId,
+      existingRequest.productQuantity,
+      true
+    );
   }
-
-  return prisma.request.update({
+  
+  const request = prisma.request.update({
     where: { id },
     data: {
       status: input.status,
       rejectionReason: input.rejectionReason,
     },
   });
+
+  revalidatePath("/api/request");
+  revalidatePath(`/api/request/${id}`);
+  return request;
 };
 
 export const deleteRequest = async (id: number) => {
-  const existingRequest = await prisma.request.findUnique({ where: { id } });
+  const existingRequest = await findById(id);
   if (!existingRequest) throw new Error(`Request not found with ID: ${id}`);
 
   await prisma.request.delete({ where: { id } });
+  revalidatePath("/api/request");
 };

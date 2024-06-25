@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import {
   message,
@@ -87,7 +89,10 @@ const CartTable = () => {
         await fetch(`/api/cart/${key}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ quantity: updatedQuantity, productId }),
+          body: JSON.stringify({
+            quantity: updatedQuantity,
+            productId,
+          }),
         });
 
         message.success(`Updated cart #${key} successfully`);
@@ -96,7 +101,7 @@ const CartTable = () => {
         message.error(`Error while updating cart #${key}`);
       }
     },
-    [form, carts]
+    [form, carts, setSelectedCart]
   );
 
   const handleClearCart = useCallback(async () => {

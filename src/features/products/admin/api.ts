@@ -22,6 +22,7 @@ export const add = async (
     },
   });
 
+  revalidatePath("/");
   revalidatePath("/products");
   return product;
 };
@@ -44,7 +45,7 @@ export const update = async (
     if (currentImage) removeDirFromFile(currentImage);
   }
 
-  product = db.product.update({
+  product = await db.product.update({
     where: {
       slug,
     },
@@ -55,13 +56,34 @@ export const update = async (
     },
   });
 
-  revalidatePath(`/`);
+  revalidatePath("/");
   revalidatePath("/products");
   revalidatePath(`/products/${slug}`);
-
   return product;
 };
 
+export const updateQuantity = async (
+  id: number,
+  quantity: number,
+  add: boolean
+) => {
+  const product = await db.product.update({
+    where: {
+      id,
+    },
+    data: {
+      quantity: add ? { increment: quantity } : { decrement: quantity },
+    },
+    select: {
+      slug: true,
+    },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/products");
+  revalidatePath(`/products/${product.slug}`);
+  return product;
+};
 export const remove = async (slug: string) => {
   const product = await db.product.delete({
     where: {
@@ -69,9 +91,7 @@ export const remove = async (slug: string) => {
     },
   });
 
-  revalidatePath(`/`);
+  revalidatePath("/");
   revalidatePath("/products");
-  revalidatePath(`/products/${slug}`);
-
   return product;
 };

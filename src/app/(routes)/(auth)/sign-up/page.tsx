@@ -1,4 +1,5 @@
 "use client";
+
 import AuthForm from "@/features/auth/components/auth-form";
 import { useRegister } from "@/features/auth/hooks/api";
 import { useUiStore } from "@/features/shared/stores/UiStore";

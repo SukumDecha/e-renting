@@ -1,6 +1,7 @@
 import prisma from "@/features/shared/db";
 import { z } from "zod";
 import { addCartSchema, updateCartSchema } from "./validator";
+import { revalidatePath } from "next/cache";
 
 export const findAll = async (userId: number) => {
   return await prisma.cart.findMany({
@@ -30,7 +31,7 @@ export const addCart = async (
   userId: number,
   input: z.infer<typeof addCartSchema>
 ) => {
-  const cart = await prisma.cart.findFirst({
+  let cart = await prisma.cart.findFirst({
     where: {
       userId,
       productId: input.productId,
@@ -41,9 +42,12 @@ export const addCart = async (
     throw new Error(`This product is already in your cart`);
   }
 
-  return await prisma.cart.create({
+  cart = await prisma.cart.create({
     data: { userId, ...input },
   });
+
+  revalidatePath("/api/cart");
+  return cart;
 };
 
 export const updateCart = async (
@@ -76,6 +80,8 @@ export const updateCart = async (
     throw new Error(`Cart not found with ID: ${id}`);
   }
 
+  revalidatePath("/api/cart");
+  revalidatePath(`/api/cart/${id}`);
   return updatedCart;
 };
 
@@ -87,4 +93,6 @@ export const deleteCart = async (id: number) => {
   if (!deletedCart) {
     throw new Error(`Cart not found with ID: ${id}`);
   }
+
+  revalidatePath("/api/cart");
 };

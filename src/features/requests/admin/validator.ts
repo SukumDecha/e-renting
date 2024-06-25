@@ -3,6 +3,7 @@ import { z } from "zod";
 const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
 
 export const addRequestSchema = z.object({
+  cartId: z.number(),
   productId: z.number(),
   productQuantity: z
     .number()

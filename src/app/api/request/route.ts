@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { getServerAuthSession } from "@/features/auth/auth";
 import { addRequest } from "@/features/requests/admin/api";
 import { IAddRequest } from "@/features/requests/admin/type";

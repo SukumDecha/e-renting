@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { message, Table, Button, Divider, Tooltip } from "antd";
 
 import Image from "next/image";
@@ -11,71 +11,36 @@ import { IconArrowBackUp, IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
 import { IRequest } from "../admin/type";
 import { renderStatus } from "../helper";
+import {
+  useDeleteRequest,
+  useRequests,
+  useUpdateRequestStatus,
+} from "../hooks/api";
 
 const RequestTable = () => {
-  const [requests, setRequests] = useState<IRequest[]>([]);
+  const { data: requests, isLoading, error } = useRequests();
+  const { mutateAsync: deleteRequestAsync } = useDeleteRequest();
+  const { mutateAsync: updateRequestAsync } = useUpdateRequestStatus();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch("/api/request");
-      if (!res.ok) throw new Error("Failed to fetch data");
+  const handleDelete = useCallback(
+    (id: number) => {
+      deleteRequestAsync(id);
+    },
+    [deleteRequestAsync]
+  );
 
-      const data = (await res.json()) as IRequest[];
-      setRequests(data);
-    } catch (error) {
-      console.error("Fetch error: ", error);
-      message.error("Failed to load requests");
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const handleDelete = useCallback(async (id: number) => {
-    try {
-      const res = await fetch(`/api/request/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error();
-
-      setRequests((prevRequests) =>
-        prevRequests.filter((req) => req.id !== id)
-      );
-      message.success(`Removed request #${id} successfully`);
-    } catch {
-      message.error(`Error while deleting cart #${id}`);
-    }
-  }, []);
-
-  const handleClearCart = useCallback(async () => {
-    selectedRowKeys.forEach(async (c) => await handleDelete(c as number));
-
+  const handleClearCart = useCallback(() => {
+    selectedRowKeys.forEach((id) => deleteRequestAsync(id as number));
     setSelectedRowKeys([]);
-  }, [selectedRowKeys, handleDelete]);
+  }, [selectedRowKeys, deleteRequestAsync]);
 
   const save = useCallback(
-    async (requestId: number) => {
+    (requestId: number) => {
       const status = "RETURNED" as const;
-
-      try {
-        const updatedRequest = requests.map((req) =>
-          req.id === requestId ? { ...req, status } : req
-        );
-
-        setRequests(updatedRequest);
-
-        await fetch(`/api/request/${requestId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status }),
-        });
-
-        message.success(`Updated request #${requestId} successfully`);
-      } catch {
-        message.error(`Error while updating request #${requestId}`);
-      }
+      updateRequestAsync({ id: requestId, status });
     },
-    [requests]
+    [updateRequestAsync]
   );
 
   const columns: ColumnType<IRequest>[] = [
@@ -107,6 +72,11 @@ const RequestTable = () => {
       render: (_, record) => {
         return <p>{record.productQuantity}</p>;
       },
+    },
+    {
+      title: "Reason",
+      dataIndex: "reason",
+      key: "reason",
     },
     {
       title: "Status",
@@ -184,6 +154,9 @@ const RequestTable = () => {
     footer: defaultFooter,
   };
 
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>{error.message}</p>;
+  
   return (
     <div className="-request-table table">
       <div className="-title">

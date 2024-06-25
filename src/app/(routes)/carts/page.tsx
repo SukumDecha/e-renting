@@ -1,4 +1,5 @@
-import CartCheckout from "@/features/cart/components/cart-check-out";
+import CartSummary from "@/features/cart/components/cart-summary";
+import CartTable from "@/features/cart/components/cart-table";
 import React, { CSSProperties } from "react";
 
 const CartPage = () => {
@@ -11,7 +12,10 @@ const CartPage = () => {
     <>
       <h1 style={titleStyle}>ตะกร้าของคุณ</h1>
       <br />
-      <CartCheckout />
+      <div className="cart-checkout">
+        <CartTable />
+        <CartSummary />
+      </div>
     </>
   );
 };

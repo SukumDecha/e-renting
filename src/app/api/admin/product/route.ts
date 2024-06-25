@@ -38,7 +38,7 @@ export const POST = async (req: Request) => {
 
     revalidatePath("/");
     revalidatePath("/products");
-
+    revalidatePath(`/products/${product.slug}`);
     return new Response(JSON.stringify(product), { status: 201 });
   } catch (error) {
     console.error("Error processing product addition:", error);

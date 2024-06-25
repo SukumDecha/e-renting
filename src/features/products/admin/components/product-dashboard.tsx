@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FloatButton, message, Space, Table } from "antd";
+import { message, Space, Table } from "antd";
 
 import { ColumnsType } from "antd/es/table";
 
@@ -12,7 +12,6 @@ import { getImagePath } from "@/features/shared/helpers/upload";
 import DeleteButton from "@/features/shared/components/dashboard/delete-button";
 import EditButton from "@/features/shared/components/dashboard/edit-button";
 
-import { useRouter } from "next/navigation";
 import { renderTag } from "../../helper";
 
 const ProductDashBoard = () => {
@@ -38,7 +37,7 @@ const ProductDashBoard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/product");
 
       setProducts(await (res.json() as Promise<IProduct[]>));
       setLoading(false);

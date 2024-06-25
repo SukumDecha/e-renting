@@ -35,20 +35,20 @@ export const findAll = async ({
 
   const take = limit === -1 ? undefined : limit;
 
-  const products = await prisma.request.findMany({
+  const request = await prisma.request.findMany({
     select: selectFields,
     where: whereClause,
     orderBy,
     take,
   });
 
-  return products;
+  return request;
 };
 
 export const findById = async (id: number) => {
-  const product = await prisma.product.findUnique({
+  const request = await prisma.request.findUnique({
     where: { id },
   });
 
-  return product;
+  return request;
 };

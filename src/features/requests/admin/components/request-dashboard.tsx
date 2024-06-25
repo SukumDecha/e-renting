@@ -139,6 +139,11 @@ const RequestDashboard = () => {
       },
     },
     {
+      title: "Reason",
+      dataIndex: "reason",
+      key: "reason",
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",
@@ -196,6 +201,9 @@ const RequestDashboard = () => {
       onChange: (keys: React.Key[]) => {
         setSelectedRowKeys(keys);
       },
+      getCheckboxProps: (record: IRequest) => ({
+        disabled: record.status !== "PENDING",
+      }),
     }),
     [selectedRowKeys]
   );
@@ -214,7 +222,7 @@ const RequestDashboard = () => {
           </Button>
         </Space>
       </div>
-    );
+    )
   };
 
   const tableProps = {
@@ -224,7 +232,13 @@ const RequestDashboard = () => {
 
   return (
     <div className="-request-table table">
-      <h4 className="-title">Request Approval</h4>
+      <h4
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Request Approval
+      </h4>
 
       <Divider />
       <Table
