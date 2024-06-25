@@ -33,7 +33,6 @@ const ECTFloatButton = () => {
     }).length || 0;
 
   const renderReturnButton = () => {
-    console.log("pendingItemCount", pendingItemCount);
     if (pendingItemCount === 0) return <></>;
 
     return (

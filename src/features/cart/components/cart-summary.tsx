@@ -33,7 +33,6 @@ const CartSummary = () => {
 
       for (let i = 0; i < carts.length; i++) {
         const cart = carts[i];
-        console.log("cart", cart);
 
         const response = await fetch("/api/request", {
           method: "POST",

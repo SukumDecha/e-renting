@@ -12,6 +12,7 @@ An e-renting website created to improve knowledge in Next.js, React Query, Ant D
     <img src="screenshots/user/index.png" alt="E-Renting Website Preview" width="200">
     <img src="screenshots/user/product-list.png" alt="E-Renting Website Preview" width="200">
     <img src="screenshots/user/product-item.png" alt="E-Renting Website Preview" width="200">
+     <img src="screenshots/user/running-out.png" alt="E-Renting Website Preview" width="200">
     <img src="screenshots/user/cart.png" alt="E-Renting Website Preview" width="200">
     <img src="screenshots/user/cart-form.png" alt="E-Renting Website Preview" width="200">
     <img src="screenshots/user/request.png" alt="E-Renting Website Preview" width="200">
