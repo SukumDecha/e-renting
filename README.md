@@ -4,7 +4,7 @@ An e-renting website created to improve knowledge in Next.js, React Query, Ant D
 
 ## Preview
 
-User view:
+### User view:
 <div style="display: flex; flex-wrap: wrap;">
     <img src="screenshots/user/unauth.png" alt="E-Renting Website Preview" width="200">
     <img src="screenshots/user/login.png" alt="E-Renting Website Preview" width="200">
@@ -17,7 +17,7 @@ User view:
     <img src="screenshots/user/request.png" alt="E-Renting Website Preview" width="200">
 </div>
 
-Admin View
+### Admin View
 
 <div style="display: flex; flex-wrap: wrap;">
     <img src="screenshots/admin/product-dashboard.png" alt="E-Renting Website Preview" width="200">
