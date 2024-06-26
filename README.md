@@ -40,6 +40,14 @@ An e-renting website created to improve knowledge in Next.js, React Query, Ant D
   - Product dashboard to edit product properties.
   - Request dashboard to approve or reject user requests.
 
+## Features to add
+
+- **User Features:**
+   - Edit User profile (name, image, change password)
+  
+- **Admin Features:**
+   - User dashboard
+
 ## Tech Stack
 
 - **Frontend:**
@@ -47,6 +55,7 @@ An e-renting website created to improve knowledge in Next.js, React Query, Ant D
   - [React Query](https://react-query.tanstack.com/)
   - [Ant Design (antd)](https://ant.design/)
   - [Zustand](https://zustand.surge.sh/)
+  - [Sass](https://sass-lang.com/)
 
 - **Backend:**
   - [Prisma](https://www.prisma.io/)
