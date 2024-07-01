@@ -10,6 +10,7 @@ import { renderTag } from "../helper";
 import { useRouter } from "next/navigation";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useUiStore } from "@/features/shared/stores/UiStore";
+import { useAddCart } from "@/features/cart/hooks/api";
 
 interface IProps {
   product: IProduct;
@@ -18,6 +19,7 @@ interface IProps {
 const ProductItemDetail = ({ product }: IProps) => {
   const router = useRouter();
   const openNotification = useUiStore((state) => state.openNotification);
+  const { mutateAsync: addToCart, error } = useAddCart();
 
   const handleAddToCart = async () => {
     const data = {
@@ -25,21 +27,13 @@ const ProductItemDetail = ({ product }: IProps) => {
       amount: 1,
     };
 
-    const res = await fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await addToCart(data);
 
-    if (!res.ok) {
-      const reqBody = await res.json();
-
+    if (error) {
       openNotification({
         type: "error",
         message: "Something went wrong",
-        description: reqBody.err || "Error while adding product to your cart",
+        description: error.message,
       });
       return;
     }

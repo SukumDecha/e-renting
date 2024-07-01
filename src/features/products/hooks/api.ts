@@ -23,8 +23,8 @@ export const useCreateProduct = () => {
       const product = await (res.json() as Promise<IProduct>);
       return product;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
     },
@@ -57,28 +57,27 @@ export const useEditProduct = (slug: string) => {
       const product = await (res.json() as Promise<IProduct>);
       return product;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["products", slug],
-      });
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
     },
   });
 };
 
-export const useFindAllProduct = () => {
-  return useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await fetch("/api/product");
-      const products = await (res.json() as Promise<IProduct>);
+// Unused
+// export const useFindAllProduct = () => {
+//   return useQuery({
+//     queryKey: ["products"],
+//     queryFn: async () => {
+//       const res = await fetch("/api/product");
+//       const products = await (res.json() as Promise<IProduct>);
 
-      return products;
-    },
-  });
-};
+//       return products;
+//     },
+//     staleTime: 1000 * 60 * 5,
+//   });
+// };
 
 export const useFindProductBySlug = (slug: string) => {
   return useQuery({
@@ -90,5 +89,6 @@ export const useFindProductBySlug = (slug: string) => {
       }
       return res.json();
     },
+    staleTime: 1000 * 60 * 5,
   });
 };

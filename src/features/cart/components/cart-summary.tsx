@@ -8,11 +8,13 @@ import TextArea from "antd/es/input/TextArea";
 import { useUiStore } from "@/features/shared/stores/UiStore";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/features/shared/stores/CartStore";
+import { useBorrowItem } from "@/features/requests/hooks/api";
 
 const { RangePicker } = DatePicker;
 
 const CartSummary = () => {
   const [loading, setLoading] = useState(false);
+  const { mutateAsync: borrowItem, error } = useBorrowItem();
   const carts = useCartStore((state) => state.selectedCart);
   const openNotification = useUiStore((state) => state.openNotification);
   const router = useRouter();
@@ -34,26 +36,19 @@ const CartSummary = () => {
       for (let i = 0; i < carts.length; i++) {
         const cart = carts[i];
 
-        const response = await fetch("/api/request", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            cartId: cart.id,
-            productId: cart.productId,
-            productQuantity: cart.amount,
-            reason: values.reason,
-            requestDate,
-            returnDate,
-          }),
+        await borrowItem({
+          cartId: cart.id,
+          productId: cart.productId,
+          productQuantity: cart.amount,
+          reason: values.reason,
+          requestDate,
+          returnDate,
         });
 
-        if (!response.ok) {
-          const reqBody = await response.json();
+        if (error) {
           openNotification({
             message: "Error",
-            description: reqBody.err || "Failed to borrow item",
+            description: error.message,
             type: "error",
           });
           return;
