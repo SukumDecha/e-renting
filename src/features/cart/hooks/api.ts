@@ -4,7 +4,10 @@ import { ICart } from "../type";
 
 const fetchCarts = async () => {
   const res = await fetch("/api/cart");
-  if (!res.ok) throw new Error("Failed to fetch carts");
+  if (!res.ok) {
+    throw new Error("Failed to fetch carts");
+  }
+
   return res.json() as Promise<ICart[]>;
 };
 
