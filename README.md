@@ -2,31 +2,6 @@
 
 An e-renting website created to improve knowledge in Next.js, React Query, Ant Design, Zustand, Prisma, PostgreSQL, and NextAuth.
 
-## Preview
-
-### User view:
-<div style="display: flex; flex-wrap: wrap;">
-    <img src="screenshots/user/unauth.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/login.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/register.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/index.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/product-list.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/product-item.png" alt="E-Renting Website Preview" width="200">
-     <img src="screenshots/user/running-out.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/cart.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/cart-form.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/user/request.png" alt="E-Renting Website Preview" width="200">
-</div>
-
-### Admin View
-
-<div style="display: flex; flex-wrap: wrap;">
-    <img src="screenshots/admin/product-dashboard.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/admin/product-edit.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/admin/request-table.png" alt="E-Renting Website Preview" width="200">
-    <img src="screenshots/admin/request-action.png" alt="E-Renting Website Preview" width="200">
-</div>
-
 ## Features
 
 - **User Features:**
